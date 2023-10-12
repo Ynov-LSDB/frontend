@@ -1,0 +1,49 @@
+.header {
+    background-color: #282c34;
+    min-height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: top, space-between;
+    font-size: calc(10px + 2vmin);
+    color: white;
+    padding: 8px;
+}
+
+.title {
+    margin-left: 20px;
+    margin-right: 30px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.logo {
+    height: 40px;
+    width: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-image: url('../../../assets/images/logo.png '); /* Remplacez 'boule-de-petanque.png' par le chemin de votre image de boule de pétanque */
+    background-size: cover;
+    animation: spin 5s linear;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    20% {
+        transform: rotate(1440deg); /* 4 */
+    }
+    40% {
+        transform: rotate(2520deg); /* 7 */
+    }
+    60% {
+        transform: rotate(3240deg); /* 9 */
+    }
+    80% {
+        transform: rotate(3672deg); /* 10.2 */
+    }
+    100% {
+        transform: rotate(3960deg); /* 11 */
+    }
+}
