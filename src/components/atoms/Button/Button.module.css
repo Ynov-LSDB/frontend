@@ -10,3 +10,21 @@
     transition: all 0.3s ease;
     margin: 3px;
 }
+
+.button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.activeButton {
+    background-color: #000;
+    border: 1px solid #000;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 16px;
+    transition: all 0.3s ease;
+    margin: 3px;
+}
