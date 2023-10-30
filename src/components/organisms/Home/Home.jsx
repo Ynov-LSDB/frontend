@@ -1,6 +1,7 @@
 import React from "react";
 import backgroundImage from "../../../assets/images/bg.jpeg";
 import Style from "./Home.module.css";
+import Weather from "../../../toolkit/apiWeather.config"
 
 const Home = () => {
     return (
@@ -15,6 +16,7 @@ const Home = () => {
                 <div className={Style.leftCard}>
                     <div className={Style.leftCardTitle}>Title event ?</div>
                     <div className={Style.leftCardContent}>Content</div>
+                    <Weather />
                 </div>
                 <div className={Style.rightCard}>
                     <div className={Style.rightCardTitle}>Title event ?</div>
