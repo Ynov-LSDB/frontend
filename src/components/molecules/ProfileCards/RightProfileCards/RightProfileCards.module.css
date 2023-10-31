@@ -1,0 +1,149 @@
+.container {
+    flex: 70%;
+    padding-left: 5px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.margin {
+    margin-bottom: 20px;
+}
+
+.rightTopCardContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    height: 100%;
+}
+
+.textSection {
+    flex: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.description {
+    font-size: 18px;
+}
+
+.photoSection {
+    flex: 40%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.photo {
+    width: 80%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Bottom card */
+.informationSection {
+    display: flex;
+    flex-direction: row; /* Changez de column à row */
+    justify-content: space-between; /* Assurez-vous que les deux sections sont bien espacées */
+    align-items: center; /* Alignement au sommet plutôt qu'au centre */
+    padding: 10px; /* Ajout d'un padding pour un peu d'espace */
+    height: 100%;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    justify-content: space-between;
+    height: 25px;
+}
+
+.titre, .text {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+}
+
+.titre {
+    padding-right: 10px; /* Réduit à 10px */
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: left;
+}
+
+.text {
+    padding-left: 5px;
+    font-size: 1em;
+    margin-left: -30px;
+}
+
+.leftInfo {
+    flex: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 50px;
+}
+
+.rightEvent {
+    flex: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.eventImage {
+    width: 50%;
+    height: auto;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+/* Separator */
+.separator {
+    width: 2px;
+    background-color: lightgrey;
+    margin: 0 20px 0 -20px; /* Espacement horizontal autour du séparateur */
+    height: 80%; /* Hauteur complète du conteneur parent */
+    display: inline-block; /* Pour s'assurer qu'il s'aligne horizontalement avec les autres éléments */
+}
+
+
+/* Modal */
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.modalImage {
+    max-width: 90%;
+    max-height: 90%;
+    margin: auto;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: white;
+}
