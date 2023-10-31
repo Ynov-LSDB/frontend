@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {FaHome, FaInfo, FaShoppingBasket, FaUser} from 'react-icons/fa';
+import {FaBurn, FaHome, FaInfo, FaShoppingBasket, FaUser} from 'react-icons/fa';
 import './App.css';
 
 //Organisms
@@ -8,6 +8,7 @@ import Header from './components/organisms/Header/Header';
 import Home from './components/organisms/Home/Home';
 import Profile from './components/organisms/Profile/Profile';
 import Shop from './components/organisms/Shop/Shop';
+import Events from "./components/organisms/Events/Events";
 
 //Internal Imports
 import Style from './App.css';
@@ -25,11 +26,11 @@ function App() {
       }
     },
     {
-      label: "Shop",
-      icon: <FaShoppingBasket />,
+      label: "Events",
+      icon: <FaBurn />,
       action: () => {
-        console.log("Shop clicked")
-        setActivePage("Shop")
+        console.log("Events clicked")
+        setActivePage("Events")
       }
     },
     {
@@ -46,8 +47,8 @@ function App() {
       <Header menu={menu} activePage={activePage} setActivePage={setActivePage} />
       {(() => {
         switch (activePage) {
-          case "Shop":
-            return <Shop />
+          case "Events":
+            return <Events />
           case "About":
             return <About />
           case "Profile":
