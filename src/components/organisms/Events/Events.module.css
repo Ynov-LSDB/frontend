@@ -1,0 +1,9 @@
+.EventsList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: auto;
+    width: 90%;
+    padding: 10px;
+    box-sizing: border-box;
+}
