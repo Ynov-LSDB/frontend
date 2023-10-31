@@ -1,5 +1,5 @@
 .header {
-    background-color: #333333;
+    background-color: #3D3D3D;
     min-height: 50px;
     display: flex;
     flex-direction: row;
@@ -8,16 +8,6 @@
     color: white;
     padding: 8px;
     height: 5vh;
-}
-
-.logo {
-    height: 40px;
-    width: 40px;
-    margin-left: 20px;
-    margin-right: 20px;
-    background-image: url('../../../assets/images/logo.png ');
-    background-size: cover;
-    animation: spin 5s linear;
 }
 
 .buttons {
@@ -55,3 +45,29 @@
     }
 }
 
+@keyframes throwFromLeft {
+    0% {
+        transform: translateX(-150%) translateY(70%) scale(0.5);
+        opacity: 0;
+    }
+    60% {
+        transform: translateX(0%) translateY(20%) scale(1.5);
+        opacity: 1;
+    }
+    75% {
+        transform: translateX(5%) translateY(0%) scale(0.95);
+    }
+    100% {
+        transform: translateX(3%) translateY(10%) scale(1.05);
+    }
+}
+
+.logo {
+    height: 40px;
+    width: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-image: url('../../../assets/images/logo.png');
+    background-size: cover;
+    animation: throwFromLeft 1s 0.8s , spin 5s linear 1.6s; /* Animation de lancer en 2 secondes, puis une animation de roulement en 5 secondes qui commence après une pause de 2 secondes */
+}
