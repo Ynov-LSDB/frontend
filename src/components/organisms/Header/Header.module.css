@@ -1,5 +1,5 @@
 .header {
-    background-color: #2a313e;
+    background-color: #333333;
     min-height: 50px;
     display: flex;
     flex-direction: row;
@@ -15,7 +15,7 @@
     width: 40px;
     margin-left: 20px;
     margin-right: 20px;
-    background-image: url('../../../assets/images/logo.png '); /* Remplacez 'boule-de-petanque.png' par le chemin de votre image de boule de pétanque */
+    background-image: url('../../../assets/images/logo.png ');
     background-size: cover;
     animation: spin 5s linear;
 }
