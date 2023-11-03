@@ -1,0 +1,9 @@
+.about {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    background-color: rgba(255, 255, 255, 0.8);
+    top: 10%;
+    left: 10%;
+    z-index: -1;
+}
