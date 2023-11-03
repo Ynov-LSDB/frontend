@@ -5,7 +5,6 @@
     height: 80%;
     top: 10%;
     height: 101%;
-    background-color: rgba(255, 255, 255, 0.8);
     top: 9%;
     left: 10%;
     z-index: -1;
@@ -35,7 +34,7 @@
 
 .leftCard {
     width: 40%;
-    height: 80%;
+    height: 60%;
     position: absolute;
     top: 15%;
     left: 5%;
@@ -45,7 +44,7 @@
 
 .rightCard {
     width: 40%;
-    height: 80%;
+    height: 60%;
     position: absolute;
     top: 15%;
     right: 5%;

@@ -7,6 +7,18 @@
     margin-left: 5%;
 }
 
+.weather-container img {
+    width: 75%;
+    height: 75%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    position: -webkit-sticky;
+    position: sticky;
+}
+
 .weather-header {
     display: flex;
     flex-direction: column;
