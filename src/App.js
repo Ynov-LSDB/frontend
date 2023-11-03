@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {FaBurn, FaHome, FaInfo, FaShoppingBasket, FaUser} from 'react-icons/fa';
+import {FaBurn, FaCalendar, FaHome, FaInfo, FaShoppingBasket, FaUser} from 'react-icons/fa';
 import './App.css';
 
 //Organisms
@@ -27,7 +27,7 @@ function App() {
     },
     {
       label: "Events",
-      icon: <FaBurn />,
+      icon: <FaCalendar />,
       action: () => {
         console.log("Events clicked")
         setActivePage("Events")
