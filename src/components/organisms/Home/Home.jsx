@@ -1,12 +1,10 @@
 import React from "react";
-import backgroundImage from "../../../assets/images/bg.jpeg";
 import Style from "./Home.module.css";
 import Weather from "../../../toolkit/apiWeather.config"
 
 const Home = () => {
     return (
         <div className={Style.home}>
-            <img src={backgroundImage} alt="background" className={Style.backgroundImage} />
             <div className={Style.content}>
                 <div className={Style.buttonContainerStyle}>
                     <button className={Style.buttonStyle}>Onglet 1</button>
