@@ -1,0 +1,41 @@
+.weather-container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -7%;
+    margin-left: 5%;
+}
+
+.weather-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.weather-header h2{
+    margin-left: 30%;
+}
+
+.weather-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.weather-icon {
+    flex: 1;
+}
+
+.weather-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 150%;
+}
+
+.weather-advice p {
+    font-size: 1em;
+    width: 150%;
+}
