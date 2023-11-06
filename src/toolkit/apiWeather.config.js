@@ -46,13 +46,13 @@ const Weather = () => {
     return (
         <div className="weather-container">
             <div className="weather-header">
-                <h2>Lieu : {weather.name}</h2>
+                <h2>{weather.name}</h2>
                 <div className="weather-info">
                     <div className="weather-icon">
                         <img src={iconurl} alt="Weather Icon"/>
                     </div>
                     <div className="weather-details">
-                        <p>La temperature est de : {weather.main.temp}°C</p>
+                        <p> {weather.main.temp}°C </p>
                         {isCold && <p>La température est fin fraîche, prends un vin chaud.</p>}
                         {isHot && <p>La température est franc élevé, prends tes boules et un pastis bien frais.</p>}
                     </div>

@@ -45,7 +45,6 @@ function App() {
   return (
     <div className={Style.App}>
       <Header menu={menu} activePage={activePage} setActivePage={setActivePage} className={Style.Header} />
-      <img src={backgroundImage} class="backgroundImage"/>
       {(() => {
         switch (activePage) {
           case "Events":
