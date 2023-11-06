@@ -1,10 +1,13 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Style from "./Home.module.css";
 import Weather from "../../../toolkit/apiWeather.config"
-
+import axios from 'axios';
+import api from "../../../toolkit/api.config";
 const Home = () => {
     const [isCold, setIsCold] = useState(false);
     const [isHot, setIsHot] = useState(false);
+    const [events, setEvents] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const nextEvent = {
         "id": 1,
@@ -21,6 +24,25 @@ const Home = () => {
         "updated_at": "2023-11-02T12:30:00"
     }
 
+    useEffect(() => {
+        axios(api("get", "events"))
+        .then(response => {
+            console.log(response.data);
+            setEvents(response.data);
+            setIsLoaded(true);
+        })
+        .catch(error => {
+            console.error('Error fetching events data:', error);
+            setIsLoaded(true);
+        });
+    }, []);
+
+    if (!isLoaded) {
+        return <div>Loading...</div>;
+    }
+
+    // const titleEvent = events.data[0].title;
+    const titleEvent = "test";
     return (
         <div className={Style.home}>
             <div className={Style.weatherCard}>
@@ -31,7 +53,7 @@ const Home = () => {
             <div className={Style.content}>
                 <div className={Style.leftCard}>
                     <h2> Prochain évènement mon Sacoche ! </h2>
-                    <p className={Style.eventTitle}><strong>{nextEvent.title}</strong></p>
+                    <p className={Style.eventTitle}><strong>{titleEvent}</strong></p>
                     <div className={Style.eventInfo}>
                         <p className={Style.eventDate}><strong>Date :</strong> {new Date(nextEvent.date).toLocaleDateString("fr-FR", { year: 'numeric', month: 'long', day: 'numeric' })}, {new Date(nextEvent.date).toLocaleTimeString("fr-FR", { hour: '2-digit', minute: '2-digit' })}H</p>
                         <p className={Style.eventPrice}><strong>Prix :</strong> {nextEvent.price}</p>
