@@ -3,11 +3,11 @@ import {FaCalendar, FaHome, FaInfo, FaLock, FaUnLock, FaUser} from 'react-icons/
 import './App.css';
 
 //Organisms
-import About from './components/organisms/About/About';
+import About from './components/templates/About/About';
 import Header from './components/organisms/Header/Header';
-import Home from './components/organisms/Home/Home';
-import Profile from './components/organisms/Profile/Profile';
-import Events from "./components/organisms/Events/Events";
+import Home from './components/templates/Home/Home';
+import Profile from './components/templates/Profile/Profile';
+import Events from "./components/templates/Events/Events";
 import Login from './components/organisms/Auth/Login';
 import Register from './components/organisms/Auth/Register';
 //Internal Imports
