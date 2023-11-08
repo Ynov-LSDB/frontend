@@ -3,8 +3,6 @@ import Style from "./Home.module.css";
 import Weather from "../../../toolkit/apiWeather.config"
 
 const Home = () => {
-    const [isCold, setIsCold] = useState(false);
-    const [isHot, setIsHot] = useState(false);
 
     const nextEvent = {
         "id": 1,

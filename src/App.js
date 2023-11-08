@@ -3,11 +3,11 @@ import {FaCalendar, FaHome, FaInfo, FaShoppingBasket, FaUser} from 'react-icons/
 import './App.css';
 
 //Organisms
-import About from './components/organisms/About/About';
+import About from './components/templates/About/About';
 import Header from './components/organisms/Header/Header';
-import Home from './components/organisms/Home/Home';
-import Profile from './components/organisms/Profile/Profile';
-import Events from "./components/organisms/Events/Events";
+import Home from './components/templates/Home/Home';
+import Profile from './components/templates/Profile/Profile';
+import Events from "./components/templates/Events/Events";
 
 //Internal Imports
 import Style from './App.css';
