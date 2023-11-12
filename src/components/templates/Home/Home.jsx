@@ -20,35 +20,40 @@ const Home = () => {
     }
 
     return (
-        <div className={Style.home}>
-            <div className={Style.weatherCard}>
-                <div className={Style.weatherTitle}>Point météo jeune !
-                    <Weather />
-                </div>
+        <div className="relative min-h-screen">
+            <div className="absolute right-0 z-10 max-w-s">
+                <Weather />
             </div>
-            <div className={Style.content}>
-                <div className={Style.leftCard}>
-                    <h2> Prochain évènement mon Sacoche ! </h2>
-                    <p className={Style.eventTitle}><strong>{nextEvent.title}</strong></p>
-                    <div className={Style.eventInfo}>
-                        <p className={Style.eventDate}><strong>Date :</strong> {new Date(nextEvent.date).toLocaleDateString("fr-FR", { year: 'numeric', month: 'long', day: 'numeric' })}, {new Date(nextEvent.date).toLocaleTimeString("fr-FR", { hour: '2-digit', minute: '2-digit' })}H</p>
-                        <p className={Style.eventPrice}><strong>Prix :</strong> {nextEvent.price}</p>
-                        <p className={Style.eventAddress}><strong>Adresse :</strong> {nextEvent.adresse}</p>
-                        <p className={Style.eventEat}><strong>Nourriture :</strong> {nextEvent.eat}</p>
-                        <p className={Style.eventLimit}><strong>Limitation :</strong> {nextEvent.registered_limit}</p>
-                        <p className={Style.eventStatus}><strong>Statut :</strong> {nextEvent.status}</p>
-                        <p className={Style.eventTeam}><strong>Style d'équipe :</strong> {nextEvent.team_style}</p>
+
+            <div className="pt-40 flex justify-center items-start space-x-4">
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-5xl mx-auto">
+
+                {/* Carte de l'événement de gauche */}
+                    <div className="bg-white shadow-lg rounded-lg p-4 flex flex-col">
+                        <h2 className="text-xl font-bold mb-4">Prochain événement</h2>
+                        <p className="text-lg font-semibold mb-2">{nextEvent.title}</p>
+                        <p className="text-sm text-gray-600 mb-1"><strong>Date :</strong> {new Date(nextEvent.date).toLocaleDateString("fr-FR", { year: 'numeric', month: 'long', day: 'numeric' })} à {new Date(nextEvent.date).toLocaleTimeString("fr-FR", { hour: '2-digit', minute: '2-digit' })}H</p>
+                        <p className="text-sm text-gray-600 mb-1"><strong>Prix :</strong> {nextEvent.price}</p>
+                        <p className="text-sm text-gray-600 mb-1"><strong>Adresse :</strong> {nextEvent.adresse}</p>
+                        <p className="text-sm text-gray-600 mb-1"><strong>Nourriture :</strong> {nextEvent.eat}</p>
+                        <p className="text-sm text-gray-600 mb-1"><strong>Limitation :</strong> {nextEvent.registered_limit}</p>
+                        <p className="text-sm text-gray-600 mb-1"><strong>Statut :</strong> {nextEvent.status}</p>
+                        <p className="text-sm text-gray-600 mb-1"><strong>Style d'équipe :</strong> {nextEvent.team_style}</p>
+                        <div className="flex-grow"></div>
                     </div>
-                </div>
-                <div className={Style.rightCard}>
-                    <div className={Style.rightCardTitle}>Title event ?</div>
-                    <div className={Style.rightCardContent}>Contenu</div>
+
+                    {/* Carte de droite */}
+                    <div className="bg-white shadow-lg rounded-lg p-4 flex flex-col">
+                        <h2 className="text-xl font-bold">Autre événement</h2>
+                        {/* Remplissez avec le contenu de l'autre événement ou laissez vide */}
+                        <div className="flex-grow"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
 
-
+};
 
 export default Home;
