@@ -4,7 +4,7 @@ import Logo from '../../../assets/images/logo.png';
 import Style from './Header.module.css';
 
 export default function Header() {
-    const userIsLoggedIn = false;
+    const userIsLoggedIn = localStorage.getItem("token");
     return (
         <header className={`bg-gray-800 h-16 flex items-center p-2 relative ${Style.header}`}>
             <Link to="/"><img src={Logo} alt="Logo" className={Style.logo} /></Link>

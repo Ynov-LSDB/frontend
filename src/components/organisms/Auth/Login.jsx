@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../../toolkit/api.config";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [success, setSuccess] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -17,11 +26,15 @@ const Login = () => {
         axios(api("post", "login", data))
             .then((response) => {
                 console.log(response);
-                setSuccess(true);
+                localStorage.setItem("token", response.data.data.token);
+                setIsLoggedIn(true);
+                setError(null);
+                navigate('/')
             })
             .catch((error) => {
                 console.error('Error fetching events data:', error.response);
-                setSuccess(false);
+                setIsLoggedIn(false);
+                setError("Identifiant incorrect");
             });
     };
 
@@ -64,8 +77,8 @@ const Login = () => {
                         <p>Si vous n'avez pas de compte ? <Link to="/auth/register" className="font-bold underline">S'inscrire</Link></p>
                     </div>
                 </form>
-                {success && <p className="text-green-500 mt-4">Vous êtes connecté !</p>}
-                {!success && <p className="text-red-500 mt-4">Identifiant incorrect</p>}
+                {error && <p className="text-red-500 mt-4">{error}</p>}
+                {isLoggedIn && <p className="text-green-500 mt-4">Vous êtes connecté !</p>}
             </div>
         </div>
     );
