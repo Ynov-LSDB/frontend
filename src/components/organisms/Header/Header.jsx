@@ -10,17 +10,17 @@ export default function Header() {
             <Link to="/"><img src={Logo} alt="Logo" className={Style.logo} /></Link>
             <ul className="flex-grow flex justify-center space-x-4">
                 {/* <Link to="/"><FaHome className="mr-1" /> Home</Link> */}
-                <Link to="/events" className="flex items-center text-white text-lg"><FaCalendar className="mr-1" />Events</Link>
-                <Link to="/about" className="flex items-center text-white text-lg"><FaInfo className="mr-1" />About</Link>
+                <Link to="/events" className="flex items-center text-white text-lg font-bold"><FaCalendar className="mr-1" />Events</Link>
+                <Link to="/about" className="flex items-center text-white text-lg font-bold"><FaInfo className="mr-1" />About</Link>
             </ul>
             <div className="ml-auto">
             {userIsLoggedIn ? (
-                    <Link to="/profile" className="flex items-center text-white text-lg">
+                    <Link to="/profile" className="flex items-center text-white text-lg font-bold">
                         <FaUser className="mr-2" />
                         Profile
                     </Link>
                 ) : (
-                    <Link to="/auth/login" className="flex items-center text-white text-lg">
+                    <Link to="/auth/login" className="flex items-center text-white text-lg font-bold">
                         <FaSignInAlt className="mr-1" />
                         Login
                     </Link>
