@@ -1,9 +1,9 @@
 import React from "react";
-import PhotoProfile from '../../assets/images/photoProfileTest.jpg';
-import ProfileLeftCard from '../molecules/ProfileLeftCard';
-import ProfileRightCards from '../molecules/ProfileRightCards';
+import PhotoProfile from '../../../assets/images/photoProfileTest.jpg';
+import ProfileLeftCard from '../../molecules/ProfileLeftCard';
+import ProfileRightCards from '../../molecules/ProfileRightCards';
 
-const UserProfile = () => {
+const Profile = () => {
     const user = {
         imageURL: PhotoProfile,
         firstName: 'John',
@@ -12,9 +12,9 @@ const UserProfile = () => {
     };
 
     const userInfos = {
-        imageURL_favBoules: require("../../assets/images/favBoules.jpg"),
+        imageURL_favBoules: require("../../../assets/images/favBoules.jpg"),
         nomFavBoules: 'Les bouliches du seigneur',
-        imageURL_event: require("../../assets/images/firstEvent.jpg"),
+        imageURL_event: require("../../../assets/images/firstEvent.jpg"),
         firstName: 'John',
         lastName: 'Doe',
         birthDate: '01/01/2000',
@@ -34,4 +34,4 @@ const UserProfile = () => {
     );
 }
 
-export default UserProfile;
+export default Profile;
