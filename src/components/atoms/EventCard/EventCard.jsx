@@ -23,7 +23,7 @@ const EventCard = ({ title, contenu, image, alt = title }) => {
                     </div>
                 </div>
             )}
-            <button onClick={toggleShowPopup}>Afficher +</button>
+            <button onClick={toggleShowPopup} className="bg-gray-800 text-white text-lg font-bold rounded-lg px-4 py-2">Afficher +</button>
         </div>
     );
 };
