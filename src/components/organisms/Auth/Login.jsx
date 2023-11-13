@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import api from "../../../toolkit/api.config";
-
+import { Link } from "react-router-dom";
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -61,7 +61,7 @@ const Login = () => {
                         <p>Mot de passe oublié ? <a href="#">Réinitialiser</a></p>
                     </div>
                     <div className="text-white mt-4">
-                        <p>Si vous n'avez pas de compte ? <a href="#">S'inscrire</a></p>
+                        <p>Si vous n'avez pas de compte ? <Link to="/auth/register">S'inscrire</Link></p>
                     </div>
                 </form>
                 {success && <p className="text-green-500 mt-4">Vous êtes connecté !</p>}

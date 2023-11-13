@@ -1,28 +1,24 @@
 import { Link } from "react-router-dom";
+import { FaHome, FaCalendar, FaUser, FaInfo, FaSignInAlt } from 'react-icons/fa';
+import Logo from '../../../assets/images/logo.png';
+import Style from './Header.module.css';
 
 export default function Header() {
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <Link to="/" className="navbar-brand">Navbar</Link>
-            <ul>
-                <CustomLink to="/">Home</CustomLink>
-                <CustomLink to="/events">Events</CustomLink>
-                <CustomLink to="/about">About</CustomLink>
-                <CustomLink to="/login">Login</CustomLink>
-                <CustomLink to="/Profile">Profile</CustomLink>
+        <header className={`bg-gray-800 h-16 flex items-center p-2 relative ${Style.header}`}>
+            <Link to="/"><img src={Logo} alt="Logo" className={Style.logo} /></Link>
+            <ul className="flex-grow flex justify-center">
+                <Link to="/"><FaHome className="mr-1" /> Home</Link>
+                <Link to="/events"><FaCalendar className="mr-1" /> Events</Link>
+                <Link to="/about"><FaInfo className="mr-1" /> About</Link>
+                <Link to="/auth/login"><FaSignInAlt className="mr-1" /> Login</Link>
             </ul>
-        </nav>
+            <div className="ml-auto">
+                <Link to="/profile" className="flex items-center text-white">
+                    <FaUser className="mr-2" />
+                    Profile
+                </Link>
+            </div>
+        </header>
     );
-}
-
-function CustomLink({ to, children, ...props }) {
-    const path = window.location.pathname
-
-    return (
-        <li className={path === to ? "active" : ''}>
-            <Link to={to} {...props}>
-                {children}
-            </Link>
-        </li>
-    )
 }
