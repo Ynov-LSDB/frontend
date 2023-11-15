@@ -7,11 +7,10 @@ export default function Header() {
     const userIsLoggedIn = localStorage.getItem("token");
     return (
         <header className={`bg-gray-800 h-16 flex items-center p-2 relative ${Style.header}`}>
-            <Link to="/"><img src={Logo} alt="Logo" className={Style.logo} /></Link>
+            <img src={Logo} alt="Logo" className={Style.logo} />
             <ul className="flex-grow flex justify-center space-x-4">
-                {/* <Link to="/"><FaHome className="mr-1" /> Home</Link> */}
+                <Link to="/" className="flex items-center text-white text-lg font-bold"><FaHome className="mr-1" /> Home</Link>
                 <Link to="/events" className="flex items-center text-white text-lg font-bold"><FaCalendar className="mr-1" />Events</Link>
-                <Link to="/about" className="flex items-center text-white text-lg font-bold"><FaInfo className="mr-1" />About</Link>
             </ul>
             <div className="ml-auto">
             {userIsLoggedIn ? (
