@@ -32,12 +32,21 @@ const Weather = () => {
 
 
     if (loading) {
-        return <div className="text-center p-4">Chargement...</div>;
+        return (
+            <div className="p-4 bg-white rounded-lg shadow-md flex items-center justify-center mx-auto w-full max-w-md">
+                <p className="text-center text-lg">Chargement...</p>
+            </div>
+        );
     }
 
     if (!weather) {
-        return <div className="text-center p-4">Impossible de récupérer les données de l'API.</div>;
+        return (
+            <div className="p-4 bg-white rounded-lg shadow-md flex items-center justify-center mx-auto w-full max-w-md">
+                <p className="text-center text-lg">Impossible de récupérer les données de la météo.</p>
+            </div>
+        );
     }
+
 
     var iconcode = weather.weather[0].icon;
     var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";

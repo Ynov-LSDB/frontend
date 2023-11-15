@@ -61,7 +61,7 @@ const Header = ({ menu, activePage, setActivePage }) => {
 
             {/* Mobile Menu: Shown/Hidden based on state */}
             {isMenuOpen && (
-                <div className={`absolute top-full right-0 w-full bg-gray-800 flex flex-col items-center py-3 z-1${Style.mobileMenu}`}>
+                <div className={`absolute top-full right-0 w-full bg-gray-800 flex flex-col items-center py-3 z-50 ${Style.mobileMenu}`}>
                     {menu.map((elt, index) => (
                         <Button
                             buttonTitle={elt.label}
