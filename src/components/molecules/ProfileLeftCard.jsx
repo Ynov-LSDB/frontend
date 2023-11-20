@@ -5,7 +5,7 @@ import ProfileInformationUser from '../atoms/Profile/ProfileInformationUser';
 
 const ProfileLeftCard = ({ user }) => {
     return (
-        <div className="flex flex-col bg-white shadow-lg rounded-lg w-full sm:w-1/3 lg:w-1/3">
+        <div className="flex flex-col bg-white shadow-lg rounded-lg w-full sm:w-1/3 lg:w-1/3 pt-20">
             <ProfileImage imageURL={user.imageURL} />
             <ProfileInformationUser firstName={user.firstName} lastName={user.lastName} birthDate={user.birthDate} />
         </div>
