@@ -19,7 +19,6 @@ const Weather = () => {
 
         axios
             .get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
-            .get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
             .then((response) => {
                 setWeather(response.data);
                 setIsCold(response.data.main.temp < 20);
