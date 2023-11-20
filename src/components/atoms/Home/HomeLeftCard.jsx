@@ -42,6 +42,7 @@ const HomeLeftCard = () => {
                         <p className="mb-1 flex"> {nextEvent.team_style} </p>
                         <div className="flex-grow"></div>
                         <button className="bg-transparent border border-gray-600 font-bold mt-4 py-2 px-4 rounded-full hover:bg-gray-200">
+                            {/* TODO : On click button, redirect to event page*/}
                             Voir plus
                         </button>
                     </div>
