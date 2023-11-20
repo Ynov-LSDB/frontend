@@ -45,3 +45,31 @@
     background-size: cover;
     animation: throwFromLeft 1s 0.8s , spin 5s linear 1.6s; /* Animation de lancer en 2 secondes, puis une animation de roulement en 5 secondes qui commence après une pause de 2 secondes */
 }
+
+.link {
+    position: relative; /* Ajoutez ceci pour le positionnement relatif du lien */
+    padding-bottom: 5px; /* Ajustez selon vos besoins pour l'espacement */
+}
+
+.link::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: #e5986e;
+    transition: width 0.5s ease-in-out;
+}
+
+.link:hover::after, .link.active::after {
+    width: 110%;
+}
+
+.linkActive::after {
+    width: 110%;
+}
+
+
+
+
