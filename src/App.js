@@ -8,8 +8,11 @@ import Login from "./components/organisms/Auth/Login";
 import Register from "./components/organisms/Auth/Register";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] =  useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect (() => {
+    setIsLoggedIn(true);
+  },[]);
   return (
     <>
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />

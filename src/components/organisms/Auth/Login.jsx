@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../../toolkit/api.config";
 import { Link, useNavigate } from "react-router-dom";
-const Login = () => {
+const Login = ({isLoggedIn, setIsLoggedIn}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate()
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import PhotoProfile from '../../assets/images/profileVierge.webp';
+import ImageFavBoules from '../../assets/images/image_fav_boules.png';
 import ProfileLeftCard from '../molecules/ProfileLeftCard';
 import ProfileRightCards from '../molecules/ProfileRightCards';
 import api from "../../toolkit/api.config";
@@ -51,12 +52,12 @@ const UserProfile = () => {
     };
 
     const userInfosProps = {
-        imageURL_favBoules: userData.imageURL_fav_balls,
-        nomFavBoules: userData.fav_balls_name,
+        imageURL_favBoules: userData.imageURL_fav_balls || ImageFavBoules,
+        nomFavBoules: userData.fav_balls_name || "Mes boules favorites",
         imageURL_event: "",
         classement: userData.rank_id,
-        doublette: doubletteData ? `${doubletteData.firstname} ${doubletteData.lastname}` : '',
-        boissonPreferee: userData.fav_drink_id,
+        doublette: doubletteData ? `${doubletteData.firstname} ${doubletteData.lastname}` : 'Non renseigné',
+        boissonPreferee: userData.fav_drink_id || "Non renseigné",
     };
 
     return (
