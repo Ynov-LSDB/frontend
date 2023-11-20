@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import api from "../../../toolkit/api.config";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
     const [firstName, setFirstName] = useState("");
@@ -9,7 +10,8 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -26,18 +28,18 @@ const Register = () => {
         axios(api("post", "register", data))
         .then((response) => {
             console.log(response.data);
-            setSuccess(true);
+            navigate("/auth/login")
         })
         .catch((error) => {
             console.error('Error to registration', error.response);
-            setSuccess(false);
+            setError("Votre compte n'a pas été créé");
         });
     };
 
     return (
-    <div className="flex justify-center items-center">
-        <div className="bg-gray-800 p-8 rounded shadow-md w-1/4 text-center">
-            <h1 className="text-white text-3xl font-semibold mb-4">S'inscrire</h1>
+    <div className="flex justify-center items-center mt-10">
+        <div className="bg-gray-800 p-8 rounded-lg shadow-md w-1/4 text-center">
+            <h1 className="text-white text-3xl font-semibold mb-4">Crée un compte</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label htmlFor="email" className="block text-white text-sm font-bold mb-2">
@@ -76,14 +78,13 @@ const Register = () => {
                     <input type="password" name="confirm_password" id="confirm_password" className="w-full px-3 py-2 border rounded-lg" value={confirmPassword}
                         onChange={(e)=> {setConfirmPassword(e.target.value)}}/>
                 </div>
-                <div>
-                    <button type="submit" className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg">
-                        Se connecter
+                <div className="mt-10">
+                    <button type="submit" onClick={handleSubmit} className=" bg-blue-500 text-white font-bold py-2 px-4 rounded-lg">
+                        S'inscrire
                     </button>
                 </div>
             </form>
-            {success && <p className="text-green-500 mt-4">Vous êtes inscrit !</p>}
-            {!success && <p className="text-red-500 mt-4">Votre compte n'a pas été crée</p>}
+            {error && <p className="text-red-500 mt-4">{error}</p>}
         </div>
     </div>
     );

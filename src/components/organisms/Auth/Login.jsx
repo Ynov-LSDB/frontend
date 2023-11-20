@@ -38,7 +38,7 @@ const Login = ({isLoggedIn, setIsLoggedIn}) => {
     };
 
     return (
-        <div className="flex justify-center items-center p-10">
+        <div className="flex justify-center items-center mt-20">
             <div className="bg-gray-800 p-8 rounded-lg shadow-md w-1/4 text-center">
                 <h1 className="text-white text-3xl font-semibold mb-4">Se connecter</h1>
                 <form onSubmit={handleSubmit}>
