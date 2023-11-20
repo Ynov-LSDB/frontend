@@ -1,7 +1,4 @@
 import React, {useState} from "react";
-// Internal imports
-import Style from "./EventCard.module.css";
-
 const EventCard = ({ title, contenu, image, alt = title }) => {
     const [showPopup, setShowPopup] = useState(false);
 
@@ -10,20 +7,22 @@ const EventCard = ({ title, contenu, image, alt = title }) => {
     };
 
     return (
-        <div className={Style.card}>
-            <img src={image} alt={alt} className={Style.img} />
-            <h1>{title}</h1>
-            <p>{contenu.length > 206 ? contenu.slice(0, 206) + "..." : contenu}</p>
+        <div className="shadow-lg text-center p-2.5 bg-gray-800 text-white m-2.5 w-[500px] rounded-md">
+            <img src={image} alt={alt} className="w-full h-[300px] object-cover" />
+            <h1 className="text-xl font-bold">{title}</h1>
+            <p>{contenu.length > 140 ? contenu.slice(0, 140) + "..." : contenu}</p>
             {showPopup && (
-                <div className={Style.popupOverlay} onClick={toggleShowPopup}>
-                    <div className={Style.popupContent}>
-                        <img src={image} alt={alt} className={Style.img} />
-                        <h1>{title}</h1>
+                <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center" onClick={toggleShowPopup}>
+                    <div className="bg-white p-5 rounded-lg shadow-xl text-center text-black w-1/2">
+                        <img src={image} alt={alt} className="w-full h-auto" />
+                        <h1 className="text-xl font-bold">{title}</h1>
                         <p>{contenu}</p>
                     </div>
                 </div>
             )}
-            <button onClick={toggleShowPopup} className="bg-gray-800 text-white text-lg font-bold rounded-lg px-4 py-2">Afficher +</button>
+            <button onClick={toggleShowPopup} className=" bg-white rounded-sm cursor-pointer text-gray-800 text-md font-semibold p-2 transition-all duration-300 ease-in-out m-1">
+                En savoir plus
+            </button>
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaHome, FaCalendar, FaUser, FaInfo, FaSignInAlt } from 'react-icons/fa';
+import { FaHome, FaCalendar, FaUser, FaSignInAlt } from 'react-icons/fa';
 import Logo from '../../../assets/images/logo.png';
 import Style from './Header.module.css';
 
