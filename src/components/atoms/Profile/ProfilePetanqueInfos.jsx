@@ -6,7 +6,6 @@ const ProfilePetanqueInfos = ({ classement, doublette, triplette, boissonPrefere
         <div className={"flex-1 m-auto sm:ml-10"}>
             <div className="mb-1"><strong>Classement:</strong> {classement}</div>
             <div className="mb-1"><strong>Doublette:</strong> {doublette}</div>
-            <div className="mb-1"><strong>Triplette:</strong> {triplette}</div>
             <div><strong>Boisson Préférée:</strong> {boissonPreferee}</div>
         </div>
     );

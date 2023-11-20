@@ -30,7 +30,6 @@ ProfileRightCards.propTypes = {
         imageURL_event: PropTypes.string.isRequired,
         classement: PropTypes.string.isRequired,
         doublette: PropTypes.string.isRequired,
-        triplette: PropTypes.string.isRequired,
         boissonPreferee: PropTypes.string.isRequired,
     }).isRequired,
 };
