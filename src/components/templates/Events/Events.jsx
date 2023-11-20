@@ -22,7 +22,7 @@ const Events = () => {
     ];
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-opacity-80 py-10">
+        <div className="flex justify-center items-center bg-opacity-80 py-10">
             <div className="flex flex-wrap justify-around w-4/5">
                 {events.map((event, index) => (
                     <EventCard

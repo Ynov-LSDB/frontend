@@ -27,9 +27,6 @@ const Login = () => {
             .then((response) => {
                 console.log(response);
                 localStorage.setItem("token", response.data.data.token);
-                console.log(response.data.data.user.id);
-                localStorage.setItem("userId", response.data.data.user.id);
-                console.log(response.data.data);
                 setIsLoggedIn(true);
                 setError(null);
                 navigate('/')
@@ -42,7 +39,7 @@ const Login = () => {
     };
 
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center p-10">
             <div className="bg-gray-800 p-8 rounded-lg shadow-md w-1/4 text-center">
                 <h1 className="text-white text-3xl font-semibold mb-4">Se connecter</h1>
                 <form onSubmit={handleSubmit}>
