@@ -15,8 +15,10 @@ const Weather = () => {
         const apiKey = process.env.REACT_APP_OPENWEATHER_API_KEY;
         const city = 'Rhône';
         console.log(apiKey)
+        console.log(apiKey)
 
         axios
+            .get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
             .get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
             .then((response) => {
                 setWeather(response.data);
