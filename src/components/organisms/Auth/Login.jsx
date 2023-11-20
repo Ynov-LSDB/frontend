@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../../toolkit/api.config";
 import { Link, useNavigate } from "react-router-dom";
-const Login = ({isLoggedIn, setIsLoggedIn}) => {
+import { toast } from 'react-toastify';
+const Login = ({ isLoggedIn, setIsLoggedIn }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -28,14 +29,36 @@ const Login = ({isLoggedIn, setIsLoggedIn}) => {
                 localStorage.setItem("token", response.data.data.token);
                 setIsLoggedIn(true);
                 setError(null);
-                navigate('/')
+                navigate('/');
+                new toast('Vous êtes connecté ✅', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             })
             .catch((error) => {
                 console.error('Error fetching events data:', error.response);
                 setIsLoggedIn(false);
-                setError("Identifiant incorrect");
+                warningAlert();
             });
-    };
+    };  
+
+    const warningAlert = () => {
+        toast.error("Echec de la connexion...", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
+    }
 
     return (
         <div className="flex justify-center items-center mt-20">

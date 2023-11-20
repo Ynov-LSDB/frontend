@@ -6,6 +6,8 @@ import Events from "./components/templates/Events/Events";
 import Profile from "./components/templates/Profile/Profile";
 import Login from "./components/organisms/Auth/Login";
 import Register from "./components/organisms/Auth/Register";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.min.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,7 +19,17 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className='App'> 
+      <ToastContainer position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light" />
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -26,7 +38,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/auth/register" element={<Register />} />
       </Routes>
-    </>
+    </div>
 
   );
 }
