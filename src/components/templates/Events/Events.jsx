@@ -1,5 +1,4 @@
 import React from "react";
-import Style from "./Events.module.css";
 import EventCard from "../../atoms/EventCard/EventCard";
 
 const Events = () => {
@@ -23,17 +22,19 @@ const Events = () => {
     ];
 
     return (
-        <div className={Style.events}>
-            <div className={Style.EventsList}>
-                {events.map((event, index) => {
-                    return (
-                        <EventCard key={index} title={event.title} contenu={event.contenu} image={event.image} className={Style.eventCard} />  
-                    )
-                })}
+        <div className="flex justify-center items-center min-h-screen bg-opacity-80 py-10">
+            <div className="flex flex-wrap justify-around w-4/5">
+                {events.map((event, index) => (
+                    <EventCard
+                        key={index}
+                        title={event.title}
+                        contenu={event.contenu}
+                        image={event.image}
+                    />
+                ))}
             </div>
         </div>
-  
-    )
+    );
 }
 
 export default Events;
