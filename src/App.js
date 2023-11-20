@@ -9,17 +9,20 @@ import Register from "./components/organisms/Auth/Register";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const token = localStorage.getItem('token')
+  useEffect(() => {
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
-  useEffect (() => {
-    setIsLoggedIn(true);
-  },[]);
   return (
     <>
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/events" element={<Events />} />
-        <Route path="/auth/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+        <Route path="/auth/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/auth/register" element={<Register />} />
       </Routes>

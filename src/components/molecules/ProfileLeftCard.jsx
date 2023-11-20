@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ProfileImage from '../atoms/Profile/ProfileImage';
 import ProfileInformationUser from '../atoms/Profile/ProfileInformationUser';
-import { useNavigate } from 'react-router-dom';
 
 const ProfileLeftCard = ({ user }) => {
-    const navigate = useNavigate();
     
     const handleLogout = () => {
-        localStorage.clear();
-        navigate('/')
+        localStorage.removeItem("token");
+        window.location.href = "/";
     }
 
     return (
