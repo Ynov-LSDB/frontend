@@ -8,18 +8,15 @@ import Login from "./components/organisms/Auth/Login";
 import Register from "./components/organisms/Auth/Register";
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] =  useState(false);
 
-  useEffect (() => {
-    setIsLogin(true);
-  },[]);
   return (
     <>
-      <Header isLogin={isLogin} setIsLogin={setIsLogin} />
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/events" element={<Events />} />
-        <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/auth/register" element={<Register />} />
       </Routes>
