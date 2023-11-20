@@ -9,7 +9,8 @@ const UserProfile = () => {
     const [doubletteData, setDoubletteData] = useState(null);
 
     useEffect(() => {
-        const userId = 1; // ou const userId = <ID du user connecté>;
+        const userId = localStorage.getItem('userId');
+        console.log(userId);
 
         axios.get(`http://localhost/api/user/${userId}`)
             .then(response => {

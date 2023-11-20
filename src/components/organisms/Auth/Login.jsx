@@ -27,6 +27,9 @@ const Login = () => {
             .then((response) => {
                 console.log(response);
                 localStorage.setItem("token", response.data.data.token);
+                console.log(response.data.data.user.id);
+                localStorage.setItem("userId", response.data.data.user.id);
+                console.log(response.data.data);
                 setIsLoggedIn(true);
                 setError(null);
                 navigate('/')
