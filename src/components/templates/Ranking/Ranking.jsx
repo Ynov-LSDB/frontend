@@ -1,273 +1,159 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     createColumnHelper,
     flexRender,
     getCoreRowModel,
-    getPaginationRowModel,
     useReactTable,
-  } from '@tanstack/react-table'
+} from '@tanstack/react-table';
 
-const testData = [
-    {
-        id: 1,
-        name: "Jean",
-        win: 5
-    },
-    {
-        id: 2,
-        name: "Paul",
-        win: 4
-    },
-    {
-        id: 3,
-        name: "Jacques",
-        win: 3
-    },
-    {
-        id: 4,
-        name: "Pierre",
-        win: 3
-    },
-    {
-        id: 5,
-        name: "Jacqueline",
-        win: 8
-    },
-    {
-        id: 6,
-        name: "Jeanne",
-        win: 0
-    },
-    {
-        id: 7,
-        name: "Marie",
-        win: 2
-    },
-    {
-        id: 8,
-        name: "Luc",
-        win: 6
-    },
-    {
-        id: 9,
-        name: "Sophie",
-        win: 1
-    },
-    {
-        id: 10,
-        name: "Thomas",
-        win: 7
-    },
-    {
-        id: 11,
-        name: "Emma",
-        win: 4
-    },
-    {
-        id: 12,
-        name: "Nicolas",
-        win: 2
-    },
-    {
-        id: 13,
-        name: "Julie",
-        win: 3
-    },
-    {
-        id: 14,
-        name: "Alexandre",
-        win: 5
-    },
-    {
-        id: 15,
-        name: "Camille",
-        win: 1
-    },
-    {
-        id: 16,
-        name: "Mathieu",
-        win: 6
-    },
-    {
-        id: 17,
-        name: "Laura",
-        win: 3
-    },
-    {
-        id: 18,
-        name: "Antoine",
-        win: 4
-    },
-    {
-        id: 19,
-        name: "Elodie",
-        win: 2
-    },
-    {
-        id: 20,
-        name: "Vincent",
-        win: 7
-    }
-]
+import {
+    TableContainer,
+    Table,
+    TableHead,
+    TableRow,
+    TableCell,
+    TableBody,
+    Paper,
+    Stack,
+    Button,
+    Typography,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+} from '@mui/material';
 
-const columnHelper = createColumnHelper()
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
+// Atoms
+import Loader from "../../atoms/Loader";
+
+const fakeData = [
+    { id: 1, firstname: 'John', lastname: 'Doe', score: 100},
+    { id: 2, firstname: 'Jane', lastname: 'Doe', score: 200},
+    { id: 3, firstname: 'Alice', lastname: 'Smith', score: 150},
+    { id: 4, firstname: 'Bob', lastname: 'Johnson', score: 250},
+    { id: 5, firstname: 'Emily', lastname: 'Brown', score: 180},
+    { id: 6, firstname: 'Michael', lastname: 'Davis', score: 300},
+    { id: 7, firstname: 'Olivia', lastname: 'Miller', score: 220},
+    { id: 8, firstname: 'William', lastname: 'Wilson', score: 120},
+    { id: 9, firstname: 'Sophia', lastname: 'Anderson', score: 280},
+    { id: 10, firstname: 'James', lastname: 'Taylor', score: 190},
+    { id: 11, firstname: 'Ava', lastname: 'Thomas', score: 230},
+    { id: 12, firstname: 'Benjamin', lastname: 'Clark', score: 140},
+    { id: 13, firstname: 'Mia', lastname: 'Lewis', score: 270},
+    { id: 14, firstname: 'Ethan', lastname: 'Harris', score: 160},
+    { id: 15, firstname: 'Charlotte', lastname: 'Martin', score: 210},
+];
+  
+const columnHelper = createColumnHelper();
 
 const columns = [
     columnHelper.accessor('rank', {
-        cell: info => info.getValue(),
-        header: () => <span> Rang </span>
+        header: 'Rang',
     }),
-    columnHelper.accessor('name', {
-        cell: info => info.getValue(),
-        header: () => <span> Nom </span>
+    columnHelper.accessor('firstname', {
+        header: 'Nom',
     }),
-    columnHelper.accessor('win', {
-        cell: info => info.getValue(),
-        header: () => <span> Victoire </span>
+    columnHelper.accessor('score', {
+        header: 'Score',
     }),
-]
+];
 
 const Ranking = () => {
 
-    const [data, setData] = React.useState(() => [...testData])
-    const rerender = React.useReducer(() => ({}), {})[1]
+    const [pagination, setPagination] = useState({
+      pageIndex: 0, // page index matlab = page number
+      pageSize: 5, // page size matlab = limit
+    });
+    const [data, setData] = useState([...fakeData]);
+    const [loading, setLoading] = useState(false);
+
+    // useEffect(() => {
+    //     axios.get('http://0.0.0.0:80/api/users/ranking', {
+    //         params: {
+    //             page: searchParams.get('pageIndex' + 1),
+    //         },
+    //     }).then((response) => {
+    //         setData(response.data);
+    //         setLoading(false);
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     });
+    // }, [searchParams]);
 
     const table = useReactTable({
-      data,
-      columns,
-      getCoreRowModel: getCoreRowModel(),
-      getPaginationRowModel: getPaginationRowModel(),
-    }) 
+        data: data,
+        columns,
+        state: {
+          pagination,
+        },
+        pageCount: data.last_page,
+        manualPagination: true,
+        onPaginationChange: setPagination,
+        getCoreRowModel: getCoreRowModel(),
+    });
     
     return (
-        <div className="relative min-h-screen items-start justify-center flex">
-            <div className="bg-white shadow-lg rounded-lg p-4 mt-5 flex flex-col w-3/4">
-                <h1 className="text-xl text-center font-bold mb-5"> Classement </h1>
-                    {/* <div className="p-2">
-                        <table>
-                            <thead>
-                            {table.getHeaderGroups().map(headerGroup => (
-                                <tr key={headerGroup.id}>
-                                {headerGroup.headers.map(header => (
-                                    <th key={header.id}>
+        <div>
+            <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                        <TableRow key={headerGroup.id}>
+                            {headerGroup.headers.map((header) => (
+                                <TableCell key={header.id}>
                                     {header.isPlaceholder
                                         ? null
                                         : flexRender(
                                             header.column.columnDef.header,
                                             header.getContext()
-                                        )}
-                                    </th>
+                                    )}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    ))}
+                </TableHead>
+                <TableBody>
+                    {loading 
+                        ? (<Loader />)
+                        : table.getRowModel().rows.map((row) => (
+                            <TableRow key={row.id}>
+                                {row.getVisibleCells().map((cell) => (
+                                    <TableCell key={cell.id}>
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    </TableCell>
                                 ))}
-                                </tr>
-                            ))}
-                            </thead>
-                            <tbody>
-                            {table.getRowModel().rows.map(row => {
-                                return (
-                                <tr key={row.id}>
-                                    {row.getVisibleCells().map(cell => {
-                                    return (
-                                        <td key={cell.id}>
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext()
-                                        )}
-                                        </td>
-                                    )
-                                    })}
-                                </tr>
-                                )
-                            })}
-                            </tbody>
-                        </table>
-                        <div className="h-4" />
-
-
-                        <div className="flex items-center gap-2">
-                            <button
-                            className="border rounded p-1"
-                            onClick={() => table.setPageIndex(0)}
-                            disabled={!table.getCanPreviousPage()}
-                            >
-                            {'<<'}
-                            </button>
-                            <button
-                            className="border rounded p-1"
-                            onClick={() => table.previousPage()}
-                            disabled={!table.getCanPreviousPage()}
-                            >
-                            {'<'}
-                            </button>
-                            <button
-                            className="border rounded p-1"
-                            onClick={() => table.nextPage()}
-                            disabled={!table.getCanNextPage()}
-                            >
-                            {'>'}
-                            </button>
-                            <button
-                            className="border rounded p-1"
-                            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                            disabled={!table.getCanNextPage()}
-                            >
-                            {'>>'}
-                            </button>
-                            <span className="flex items-center gap-1">
-                            <div>Page</div>
-                            <strong>
-                                {table.getState().pagination.pageIndex + 1} of{' '}
-                                {table.getPageCount()}
-                            </strong>
-                            </span>
-                            <span className="flex items-center gap-1">
-                            | Go to page:
-                            <input
-                                type="number"
-                                defaultValue={table.getState().pagination.pageIndex + 1}
-                                onChange={e => {
-                                const page = e.target.value ? Number(e.target.value) - 1 : 0
-                                table.setPageIndex(page)
-                                }}
-                                className="border p-1 rounded w-16"
-                            />
-                            </span>
-                            <select
-                            value={table.getState().pagination.pageSize}
-                            onChange={e => {
-                                table.setPageSize(Number(e.target.value))
-                            }}
-                            >
-                            {[25, 50].map(pageSize => (
-                                <option key={pageSize} value={pageSize}>
-                                Show {pageSize}
-                                </option>
-                            ))}
-                            </select>
-                        </div>
-                    </div> */}
-
-                {/* <table id="leaderboard">
-                    <thead>
-                        <tr>
-                            <th className="w-1/6">Position</th>
-                            <th className="w-4/6">Nom</th>
-                            <th className="w-1/6">Victoires</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {leaderBoard.map((player, index) => (
-                            <tr key={player.id}>
-                                <td>{index + 1}</td>
-                                <td>{player.name}</td>
-                                <td>{player.win}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-
-                </table> */}
-            </div>
+                            </TableRow>
+                        ))
+                    }
+                </TableBody>
+            </Table>
+            <Stack direction="row" justifyContent={'space-between'} sx={{ p: 3 }}>
+                <Button
+                    disabled={!table.getCanPreviousPage()}
+                    onClick={() => table.previousPage()}
+                    color="primary"
+                    variant="contained"
+                >
+                    <FaChevronLeft />
+                </Button>
+                <Typography>
+                    {table.getState().pagination.pageIndex + 1} /{' '}
+                    {table.getPageCount()}
+                </Typography>
+                <Button
+                    disabled={!table.getCanNextPage()}
+                    onClick={() => table.nextPage()}
+                    color="primary"
+                    variant="contained"
+                >
+                    <FaChevronRight />
+                </Button>
+            </Stack>
+            </TableContainer>
         </div>
-    )
-}
+    );
+};
 
 export default Ranking;
