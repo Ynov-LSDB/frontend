@@ -17,6 +17,8 @@ const Register = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+
+        
         const data = {
             firstname: firstName,
             lastname: lastName,
@@ -25,11 +27,60 @@ const Register = () => {
             password: password,
             confirm_password: confirmPassword,
         };
+
+        if (!firstName || !lastName || !birthDate || !email || !password || !confirmPassword) {
+            toast.warning("Veuillez remplir tous les champs !", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return;
+        }
+
+        if(email)
+        {
+            const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            if(!regex.test(email))
+            {
+                toast.warning("Veuillez entrer une adresse email valide !", {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                return;
+            }
+        }
+
+        if(password !== confirmPassword)
+        {
+            toast.warning("Les mots de passe ne correspondent pas !", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return;
+        }
+
         console.log(data);
         axios(api("post", "register", data))
             .then((response) => {
                 console.log(response.data);
-                new toast("Votre compte a été créé ✅", {
+                toast("Votre compte a été créé ✅", {
                     position: "bottom-right",
                     autoClose: 5000,
                     hideProgressBar: false,

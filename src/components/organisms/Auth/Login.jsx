@@ -30,7 +30,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
                 setIsLoggedIn(true);
                 setError(null);
                 navigate('/');
-                new toast('Vous êtes connecté ✅', {
+                toast('Vous êtes connecté ✅', {
                     position: "bottom-right",
                     autoClose: 5000,
                     hideProgressBar: false,
