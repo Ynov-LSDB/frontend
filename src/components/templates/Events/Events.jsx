@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import EventCard from "../../atoms/EventCard/EventCard";
+import EventModal from "./EventModal";
 
 const Events = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleCreateEvent = () => {
+        setIsModalOpen(true);
+    }
+
+    const handleCloseEvent = () => {
+        setIsModalOpen(false);
+    }
 
     const events = [
         {
@@ -24,26 +34,26 @@ const Events = () => {
     return (
         <div className="flex flex-col items-center bg-opacity-80 p-5">
             <div className="flex space-x-2">
-                <button className="bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-5 rounded">
+                <button onClick={handleCreateEvent} className="bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-5 rounded">
                     Créer un événement
                 </button>
                 <button className="bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-5 rounded">
                     Mes événements
                 </button>
             </div>
-            <div className="flex flex-wrap justify-around w-4/5 mt-4">
-                {events.map((event, index) => (
-                    <EventCard
-                        key={index}
-                        title={event.title}
-                        contenu={event.contenu}
-                        image={event.image}
-                    />
-                ))}
-            </div>
+            <EventModal onClose={handleCloseEvent} isOpen={isModalOpen} />
+                <div className="flex flex-wrap justify-around w-4/5 mt-4">
+                    {events.map((event, index) => (
+                        <EventCard
+                            key={index}
+                            title={event.title}
+                            contenu={event.contenu}
+                            image={event.image}
+                        />
+                    ))}
+                </div>
         </div>
     );
-    
 }
 
 export default Events;
