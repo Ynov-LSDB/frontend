@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { FaHome, FaCalendar, FaUser, FaSignInAlt } from 'react-icons/fa';
+import { FaHome, FaCalendar, FaUser, FaSignInAlt, FaTrophy } from 'react-icons/fa';
 import Logo from '../../../assets/images/logo.png';
 import Style from './Header.module.css';
 
@@ -18,6 +18,9 @@ export default function Header() {
                 </Link>
                 <Link to="/events" className={`flex items-center text-white text-lg font-bold ${Style.link} ${isActive('/events') ? Style.linkActive : ''}`}>
                     <FaCalendar className="mr-1" /> Events
+                </Link>
+                <Link to="/ranking" className={`flex items-center text-white text-lg font-bold ${Style.link} ${isActive('/ranking') ? Style.linkActive : ''}`}>
+                    <FaTrophy className="mr-1" /> Ranking
                 </Link>
             </ul>
             <div className="ml-auto">
