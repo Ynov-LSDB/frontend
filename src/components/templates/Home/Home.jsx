@@ -7,7 +7,7 @@ import HomeRightCard from "../../atoms/Home/HomeRightCard";
 const Home = () => {
 
     return (
-        <div className="relative min-h-screen">
+        <div className="relative">
             <div className="absolute right-0 z-10 max-w-s">
                 <Weather />
             </div>

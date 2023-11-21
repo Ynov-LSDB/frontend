@@ -3,12 +3,11 @@ import { FaHome, FaCalendar, FaUser, FaSignInAlt } from 'react-icons/fa';
 import Logo from '../../../assets/images/logo.png';
 import Style from './Header.module.css';
 
-export default function Header() {
-    const userIsLoggedIn = localStorage.getItem("token");
+
+export default function Header({isLoggedIn, setIsLoggedIn}) {
     const location = useLocation();
-
     const isActive = (path) => location.pathname === path;
-
+  
     return (
         <header className={`bg-gray-800 h-16 flex items-center p-2 relative ${Style.header}`}>
             <img src={Logo} alt="Logo" className={Style.logo} />
@@ -21,7 +20,7 @@ export default function Header() {
                 </Link>
             </ul>
             <div className="ml-auto">
-                {userIsLoggedIn ? (
+                {isLoggedIn ? (
                     <Link to="/profile" className={`flex items-center text-white text-lg mr-8 font-bold ${Style.link} ${isActive('/profile') ? Style.linkActive : ''}`}>
                         <FaUser className="mr-2" />
                         Profile

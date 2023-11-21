@@ -6,24 +6,39 @@ import Events from "./components/templates/Events/Events";
 import Profile from "./components/templates/Profile/Profile";
 import Login from "./components/organisms/Auth/Login";
 import Register from "./components/organisms/Auth/Register";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.min.css';
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const token = localStorage.getItem('token')
+  useEffect(() => {
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
-  useEffect (() => {
-    setIsLogin(true);
-  },[]);
   return (
-    <>
-      <Header isLogin={isLogin} setIsLogin={setIsLogin} />
+    <div className='App'> 
+      <ToastContainer position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light" />
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/events" element={<Events />} />
-        <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/auth/register" element={<Register />} />
       </Routes>
-    </>
+    </div>
 
   );
 }

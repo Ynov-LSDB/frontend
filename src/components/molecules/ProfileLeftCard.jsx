@@ -1,15 +1,26 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ProfileImage from '../atoms/Profile/ProfileImage';
 import ProfileInformationUser from '../atoms/Profile/ProfileInformationUser';
-import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const ProfileLeftCard = ({ user }) => {
-    const navigate = useNavigate();
     
     const handleLogout = () => {
-        localStorage.clear();
-        navigate('/')
+        localStorage.removeItem("token");
+        new toast('Vous êtes déconnecté ✅', {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 3000);
     }
 
     return (

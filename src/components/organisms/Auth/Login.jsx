@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../../toolkit/api.config";
 import { Link, useNavigate } from "react-router-dom";
-const Login = () => {
+import { toast } from 'react-toastify';
+const Login = ({ isLoggedIn, setIsLoggedIn }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate()
 
@@ -27,22 +27,41 @@ const Login = () => {
             .then((response) => {
                 console.log(response);
                 localStorage.setItem("token", response.data.data.token);
-                console.log(response.data.data.user.id);
-                localStorage.setItem("userId", response.data.data.user.id);
-                console.log(response.data.data);
                 setIsLoggedIn(true);
                 setError(null);
-                navigate('/')
+                navigate('/');
+                new toast('Vous êtes connecté ✅', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             })
             .catch((error) => {
                 console.error('Error fetching events data:', error.response);
                 setIsLoggedIn(false);
-                setError("Identifiant incorrect");
+                warningAlert();
             });
-    };
+    };  
+
+    const warningAlert = () => {
+        toast.error("Echec de la connexion...", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
+    }
 
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center mt-20">
             <div className="bg-gray-800 p-8 rounded-lg shadow-md w-1/4 text-center">
                 <h1 className="text-white text-3xl font-semibold mb-4">Se connecter</h1>
                 <form onSubmit={handleSubmit}>
