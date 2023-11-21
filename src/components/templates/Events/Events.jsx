@@ -46,15 +46,23 @@ const Events = () => {
                 </button>
             </div>
             <div className="flex flex-wrap justify-around w-4/5 mt-4">
-                {events ? events.map((event, index) => (
+                {events && events.length > 0 ? events.map((event, index) => (
                     <EventCard
                         key={index}
                         title={event.title}
                         description={event.description}
                         image={event.imageURL || ConcoursBase}
+                        adresse={event.adresse}
+                        categoryId={event.category_id}
+                        date={event.date}
+                        isFoodOnSite={event.is_food_on_site}
+                        price={event.price}
+                        teamStyle={event.team_style}
                         canJoin={!userisIn}
                     />
-                )): <div className="text-2xl">Aucun événement</div> }
+                )): <div className="text-center text-3xl text-white p-4">{userisIn ?
+                    "Vous n'êtes dans aucun évènement... allé dont en rejoindre un !" :
+                    "Vous chômez pas ! vous êtes déjà inscrit sur tout ce qui est possible et imaginable !"}</div> }
             </div>
         </div>
     );
