@@ -20,9 +20,12 @@ const EventCard = ({ title, contenu, image, alt = title }) => {
                     </div>
                 </div>
             )}
-            <button onClick={toggleShowPopup} className=" bg-white rounded-sm cursor-pointer text-gray-800 text-md font-semibold p-2 transition-all duration-300 ease-in-out m-1">
+            <button onClick={toggleShowPopup} className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-5 rounded">
                 En savoir plus
             </button>
+            <button className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-5 rounded">
+                    Rejoindre un événement
+                </button>
         </div>
     );
 };

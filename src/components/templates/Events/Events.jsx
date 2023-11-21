@@ -22,8 +22,16 @@ const Events = () => {
     ];
 
     return (
-        <div className="flex justify-center items-center bg-opacity-80 py-10">
-            <div className="flex flex-wrap justify-around w-4/5">
+        <div className="flex flex-col items-center bg-opacity-80 p-5">
+            <div className="flex space-x-2">
+                <button className="bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-5 rounded">
+                    Créer un événement
+                </button>
+                <button className="bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-5 rounded">
+                    Mes événements
+                </button>
+            </div>
+            <div className="flex flex-wrap justify-around w-4/5 mt-4">
                 {events.map((event, index) => (
                     <EventCard
                         key={index}
@@ -35,6 +43,7 @@ const Events = () => {
             </div>
         </div>
     );
+    
 }
 
 export default Events;
