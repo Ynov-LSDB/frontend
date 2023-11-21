@@ -11,10 +11,10 @@ const EventModal = ({ isOpen, onClose }) => {
     const [categories, setCategories] = useState([]);
     const [category_id, setCategory_id] = useState("");
     const [adresse, setAdresse] = useState("");
-    const [is_food_on_site, setIs_food_on_site] = useState("");
+    const [is_food_on_site, setIs_food_on_site] = useState(false);
     const [registered_limit, setRegistered_limit] = useState("");
     const [team_style, setTeam_style] = useState("");
-
+    const token = localStorage.getItem("token");
     useEffect(() => {
         axios(api("get", "categories", null))
             .then((response) => {
@@ -42,7 +42,7 @@ const EventModal = ({ isOpen, onClose }) => {
     }
 
     console.log(dataEvent);
-    axios(api("post", "event", dataEvent))
+    axios(api("post", "event", dataEvent, token))
         .then((response) => {
             console.log(response);
             toast('Votre événement a bien été crée ✅', {
@@ -69,6 +69,12 @@ const EventModal = ({ isOpen, onClose }) => {
                 theme: "light",
             })
         });
+    }
+
+
+    const handleChange = (event) => {
+        const isChecked = event.target.checked;
+        setIs_food_on_site(isChecked);
     }
 
     return (
@@ -131,7 +137,7 @@ const EventModal = ({ isOpen, onClose }) => {
                                         <label htmlFor="is_food_on_site" className="block text-white text-sm font-bold mb-2">
                                             Nourriture sur place
                                         </label>
-                                        <input type="integer" id="is_food_on_site" name="is_food_on_site" value={is_food_on_site} onChange={(e) => { setIs_food_on_site(e.target.value) }}/>
+                                        <input type="checkbox" id="is_food_on_site" name="is_food_on_site" value={is_food_on_site}  onChange={handleChange} />
                                     </div>
                                     <div className="mb-4 px-4 w-full md:w-1/2">
                                         <label htmlFor="registered_limit" className="block text-white text-sm font-bold mb-2">
