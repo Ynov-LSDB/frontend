@@ -23,6 +23,9 @@ import {
     MenuItem,
 } from '@mui/material';
 
+import axios from 'axios';
+import api from "../../../toolkit/api.config";
+
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 // Atoms
@@ -45,6 +48,8 @@ const fakeData = [
     { id: 14, firstname: 'Ethan', lastname: 'Harris', score: 160},
     { id: 15, firstname: 'Charlotte', lastname: 'Martin', score: 210},
 ];
+
+fakeData.sort((a, b) => b.score - a.score);
   
 const columnHelper = createColumnHelper();
 
@@ -64,26 +69,25 @@ const Ranking = () => {
 
     const [pagination, setPagination] = useState({
       pageIndex: 0, // page index matlab = page number
-      pageSize: 5, // page size matlab = limit
+      pageSize: 10, // page size matlab = limit
     });
-    const [data, setData] = useState([...fakeData]);
+    const [data, setData] = useState({});
     const [loading, setLoading] = useState(false);
 
-    // useEffect(() => {
-    //     axios.get('http://0.0.0.0:80/api/users/ranking', {
-    //         params: {
-    //             page: searchParams.get('pageIndex' + 1),
-    //         },
-    //     }).then((response) => {
-    //         setData(response.data);
-    //         setLoading(false);
-    //     }).catch((error) => {
-    //         console.log(error);
-    //     });
-    // }, [searchParams]);
+     useEffect(() => {
+        setLoading(true);
+        console.log("users/ranking?page=" + (pagination.pageIndex + 1))
+        axios(api("get", "users/ranking?page=" + (pagination.pageIndex + 1)
+        )).then((response) => {
+            setData(response.data.data);
+            setLoading(false);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, [pagination]);
 
     const table = useReactTable({
-        data: data,
+        data: data.data || [],
         columns,
         state: {
           pagination,
@@ -97,60 +101,60 @@ const Ranking = () => {
     return (
         <div>
             <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => (
-                                <TableCell key={header.id}>
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext()
-                                    )}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    ))}
-                </TableHead>
-                <TableBody>
-                    {loading 
-                        ? (<Loader />)
-                        : table.getRowModel().rows.map((row) => (
-                            <TableRow key={row.id}>
-                                {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id}>
-                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <TableRow key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => (
+                                    <TableCell key={header.id}>
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                        )}
                                     </TableCell>
                                 ))}
                             </TableRow>
-                        ))
-                    }
-                </TableBody>
-            </Table>
-            <Stack direction="row" justifyContent={'space-between'} sx={{ p: 3 }}>
-                <Button
-                    disabled={!table.getCanPreviousPage()}
-                    onClick={() => table.previousPage()}
-                    color="primary"
-                    variant="contained"
-                >
-                    <FaChevronLeft />
-                </Button>
-                <Typography>
-                    {table.getState().pagination.pageIndex + 1} /{' '}
-                    {table.getPageCount()}
-                </Typography>
-                <Button
-                    disabled={!table.getCanNextPage()}
-                    onClick={() => table.nextPage()}
-                    color="primary"
-                    variant="contained"
-                >
-                    <FaChevronRight />
-                </Button>
-            </Stack>
+                        ))}
+                    </TableHead>
+                    <TableBody>
+                        {loading 
+                            ? (<Loader />)
+                            : table.getRowModel().rows.map((row) => (
+                                <TableRow key={row.id}>
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id}>
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))
+                        }
+                    </TableBody>
+                </Table>
+                <Stack direction="row" justifyContent={'space-between'} sx={{ p: 3 }}>
+                    <Button
+                        disabled={!table.getCanPreviousPage()}
+                        onClick={() => table.previousPage()}
+                        color="primary"
+                        variant="contained"
+                    >
+                        <FaChevronLeft />
+                    </Button>
+                    <Typography>
+                        {table.getState().pagination.pageIndex + 1} /{' '}
+                        {table.getPageCount()}
+                    </Typography>
+                    <Button
+                        disabled={!table.getCanNextPage()}
+                        onClick={() => table.nextPage()}
+                        color="primary"
+                        variant="contained"
+                    >
+                        <FaChevronRight />
+                    </Button>
+                </Stack>
             </TableContainer>
         </div>
     );
