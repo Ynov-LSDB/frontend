@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import Weather from "../../../toolkit/apiWeather.config";
 
 import HomeLeftCard from "../../atoms/Home/HomeLeftCard";
@@ -16,7 +16,6 @@ const Home = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-5xl mx-auto">
                 {/* Carte de gauche */}
                     <HomeLeftCard />
-
                 {/* Carte de droite */}
                     <HomeRightCard />
                 </div>
