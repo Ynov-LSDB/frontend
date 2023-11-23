@@ -1,59 +1,45 @@
-import React, { useState } from 'react';
-import {FaHome, FaInfo, FaShoppingBasket} from 'react-icons/fa';
-import './App.css';
-
-//Organisms
-import About from './components/organisms/About/About';
-import Header from './components/organisms/Header/Header';
-import Home from './components/organisms/Home/Home';
-import Shop from './components/organisms/Shop/Shop';
-
-//Internal Imports
-import Style from './App.css';
+import React, { useState, useEffect } from 'react';
+import Header from "./components/organisms/Header/Header";
+import { Route, Routes } from 'react-router-dom';
+import Home from "./components/templates/Home/Home";
+import Events from "./components/templates/Events/Events";
+import Profile from "./components/templates/Profile/Profile";
+import Login from "./components/organisms/Auth/Login";
+import Register from "./components/organisms/Auth/Register";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.min.css';
 
 function App() {
-  const [activePage, setActivePage] = useState("Home")
-
-  const menu = [
-    {
-        label: "Home",
-        icon: <FaHome />,
-        action: () => {
-          console.log("Home clicked")
-          setActivePage("Home")
-        }
-    },
-    {
-        label: "Shop",
-        icon: <FaShoppingBasket />,
-        action: () => {
-          console.log("Shop clicked")
-          setActivePage("Shop")
-        }
-    },
-    {
-        label: "About",
-        icon: <FaInfo />,
-        action: () => {
-          console.log("About clicked")
-          setActivePage("About")
-        }
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const token = localStorage.getItem('token')
+  useEffect(() => {
+    if (token) {
+      setIsLoggedIn(true);
     }
-  ]
+  }, []);
+
   return (
-    <div className={Style.App}>
-      <Header menu={menu} />
-      {(() => {
-        switch (activePage) {
-          case "Shop":
-            return <Shop />
-          case "About":
-            return <About />
-          default:
-            return <Home />
-        } 
-      })()}
+    <div className='App'> 
+      <ToastContainer position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light" />
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/auth/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/auth/register" element={<Register />} />
+      </Routes>
     </div>
+
   );
 }
 
