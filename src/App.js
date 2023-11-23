@@ -40,6 +40,7 @@ function App() {
         <Route path="/auth/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/auth/register" element={<Register />} />
+        <Route path="/ranking" element={<Ranking />} />
       </Routes>
     </div>
 
