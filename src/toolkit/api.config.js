@@ -1,4 +1,4 @@
-const api = (method, path, data = null, token = null) => {
+const api = (method, path, data = null, token = null, multipartFormData, s) => {
     const config = {
         baseUrl: "http://localhost/api/",
         path: path,

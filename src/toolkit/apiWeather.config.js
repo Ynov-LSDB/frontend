@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {FaSun, FaCloud, FaCloudRain, FaCloudSun} from 'react-icons/fa';
 
 import './apiWeather.css';
 
