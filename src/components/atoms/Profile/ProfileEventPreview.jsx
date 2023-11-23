@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 const ProfileEventPreview = ({ imageURL, title }) => {
     return (
@@ -7,9 +8,11 @@ const ProfileEventPreview = ({ imageURL, title }) => {
             {imageURL === '' ? (
                 <div className="flex flex-col justify-center items-center">
                     <p className="text-lg mb-3">Pas d'évènement prévu.</p>
-                    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                        Rejoindre un évènement
-                    </button>
+                    <Link to="/events">
+                        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                            Rejoindre un évènement
+                        </button>
+                    </Link>
                 </div>
             ) : (
                 <>

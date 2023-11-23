@@ -8,7 +8,6 @@ import api from "../../toolkit/api.config";
 
 const UserProfile = () => {
     const [userData, setUserData] = useState(null);
-    const [doubletteData, setDoubletteData] = useState(null);
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
@@ -17,23 +16,19 @@ const UserProfile = () => {
 
         axios(api("get", "me", null, token))
             .then(response => {
-                console.log(response.data.data);
                 if (response.data.success) {
                     setUserData(response.data.data);
+                    console.log("UserPorfile, response.data.data : ");
+                    console.log(response);
                 } else {
                     console.error('User not found');
-                }
-            })
-            .then(response => {
-                if (response && response.data.success) {
-                    setDoubletteData(response.data.data);
                 }
             })
             .catch(error => {
                 console.error('Error fetching user data:', error);
             });
     }, []);
-    
+
     console.log("userData " + userData)
     if (!userData) {
         return (
@@ -45,7 +40,7 @@ const UserProfile = () => {
 
 
     const userProps = {
-        imageURL: userData.imageURL || PhotoProfile,
+        imageURL: userData.imageURL_profile || PhotoProfile,
         firstName: userData.firstname,
         lastName: userData.lastname,
         birthDate: userData.birth_date,
@@ -56,8 +51,9 @@ const UserProfile = () => {
         nomFavBoules: userData.fav_balls_name || "Mes boules favorites",
         imageURL_event: "",
         classement: userData.rank_id,
-        doublette: doubletteData ? `${doubletteData.firstname} ${doubletteData.lastname}` : 'Non renseigné',
-        boissonPreferee: userData.fav_drink_id || "Non renseigné",
+        doublette: userData.doublette ? `${userData.doublette.firstname} ${userData.doublette.lastname}` : 'Non renseigné',
+        boissonPreferee: userData.drink ?  userData.drink.title : "Non renseigné",
+        boissonPrefereeId: userData.drink ?  userData.drink.id : null,
     };
 
     return (
