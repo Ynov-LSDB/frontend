@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import Weather from "../../../toolkit/apiWeather.config";
 
 import HomeLeftCard from "../../atoms/Home/HomeLeftCard";
