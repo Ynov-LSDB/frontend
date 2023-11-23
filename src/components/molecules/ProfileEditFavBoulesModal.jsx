@@ -1,22 +1,34 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from "axios";
+import api from "../../toolkit/api.config";
 
 const EditFavBoulesModal = ({ isOpen, onClose, userInfos, onSave }) => {
-    const [nomFavBoules, setNomFavBoules] = useState(userInfos.nomFavBoules);
+    const [nomFavBoules, setNomFavBoules] = useState(userInfos.nomFavBoules || '');
     const [imageFile, setImageFile] = useState(null);
 
     const handleSave = () => {
-        // Logique pour sauvegarder les modifications
-        const dataToSave = {
-            nomFavBoules,
-            imageFile,
-        };
-        onSave(dataToSave);
-        onClose();
-    };
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('token');
+        const data = new FormData();
+        data.append('fav_balls_name', nomFavBoules);
+        if (imageFile) {
+            data.append('image', imageFile);
+        }
 
-    const handleFileChange = (e) => {
-        setImageFile(e.target.files[0]);
+        axios(api("post", "user/" + userId, data, token))
+            .then(response => {
+                if(response.data.success) {
+                    window.location.reload();
+                    onSave(response.data);
+                    onClose();
+                } else {
+                    console.error('Failed to update favorite balls name:', response.data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error updating favorite balls name:', error);
+            });
     };
 
     if (!isOpen) return null;
@@ -32,7 +44,7 @@ const EditFavBoulesModal = ({ isOpen, onClose, userInfos, onSave }) => {
                         onChange={e => setNomFavBoules(e.target.value)}
                         className="mt-1 border-gray-300 rounded-md shadow-sm w-full p-2"
                     />
-                    <div className="flex items-center justify-center bg-grey-lighter mt-4">
+                    {/*<div className="flex items-center justify-center bg-grey-lighter mt-4">
                         <label className="w-full flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue">
                             <span className="mt-2 text-base leading-normal">Sélectionner une photo</span>
                             <input
@@ -42,7 +54,7 @@ const EditFavBoulesModal = ({ isOpen, onClose, userInfos, onSave }) => {
                                 className="hidden"
                             />
                         </label>
-                    </div>
+                    </div>*/}
                     <div className="flex justify-end space-x-4 mt-4">
                         <button
                             type="button"

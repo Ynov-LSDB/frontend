@@ -10,10 +10,10 @@ const api = (method, path, data = null, token = null, multipartFormData, s) => {
     const headers = config.token
         ? {
             Authorization: `Bearer ${config.token}`,
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
         }
         : {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
         };
 
     return {

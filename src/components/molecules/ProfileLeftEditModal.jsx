@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import api from "../../toolkit/api.config";
@@ -12,14 +12,23 @@ registerLocale('fr', fr);
 setDefaultLocale('fr');
 
 const ProfileLeftEditModal = ({ isOpen, onClose, user }) => {
+    const modalRef = useRef();
+
+    const handleClickOutside = (event) => {
+        if (modalRef.current && !modalRef.current.contains(event.target)) {
+            onClose();
+        }
+    };
+
     const [formData, setFormData] = useState({
         firstname: '',
         lastname: '',
         birth_date: '',
-        //imageURL_profile: "",
+        imageURL_profile: "",
     });
 
     useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
         if (user) {
             setFormData({
                 firstname: user.firstName,
@@ -27,6 +36,7 @@ const ProfileLeftEditModal = ({ isOpen, onClose, user }) => {
                 birth_date: format(parseISO(user.birthDate), 'yyyy-MM-dd'),
                 //imageURL_profile: user.imageURL,
             });
+            return document.removeEventListener('mousedown', handleClickOutside);
         }
     }, [user]);
 
@@ -53,17 +63,16 @@ const ProfileLeftEditModal = ({ isOpen, onClose, user }) => {
         updateFormData.append('firstname', formData.firstname);
         updateFormData.append('lastname', formData.lastname);
         updateFormData.append('birth_date', formData.birth_date);
-        //if (formData.imageURL_profile && typeof formData.imageURL_profile === 'object') {
-        //    updateFormData.append('imageURL_profile', formData.imageURL_profile);
-        //} else {
-        //    console.log("formData.imageURL_profile: ", formData.imageURL_profile);
-        //}
 
-        // Send the form data
+        if (formData.imageURL_profile && formData.imageURL_profile instanceof File) {
+            updateFormData.append('imageURL_profile', formData.imageURL_profile);
+        }
+
+        console.log("updateFormData: ", updateFormData);
+
         axios(api("post", "user/" + userId, updateFormData, token, "multipart/form-data", "*/*"))
             .then((response) => {
                 if (response.status === 200) {
-                    //console.log("Mise à jour réussie: ", response);
                     window.location.reload();
                     onClose();
                 }
@@ -78,24 +87,25 @@ const ProfileLeftEditModal = ({ isOpen, onClose, user }) => {
 
     return (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex justify-center items-center z-50 px-4">
-            <div className="bg-white rounded-lg shadow-xl max-w-lg w-full mx-auto p-6">
+            <div className="bg-white rounded-lg shadow-xl max-w-lg w-full mx-auto p-6" ref={modalRef}>
                 <div className="mt-3 text-center">
                     <h3 className="text-lg leading-6 font-medium text-gray-900">Modifier votre profil</h3>
                     <form onSubmit={onUpdate} className="space-y-4">
                         <input type="text" name="firstname" placeholder="Prénom" value={formData.firstname} onChange={handleInputChange} className="mt-1 border-gray-300 rounded-md shadow-sm" />
                         <input type="text" name="lastname" placeholder="Nom" value={formData.lastname} onChange={handleInputChange} className="mt-1 border-gray-300 rounded-md shadow-sm" />
-                        {/*<div className="flex items-center justify-center bg-grey-lighter mt-4">
+                        <div className="flex items-center justify-center bg-grey-lighter mt-4">
                             <label className="w-full flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue">
                                 <span className="mt-2 text-base leading-normal">Sélectionner une photo</span>
                                 <input
                                     type='file'
+                                    formEncType={'multipart/form-data'}
                                     name='imageURL_profile'
                                     onChange={handleFileChange}
                                     className="hidden"
                                     accept="image/png, image/jpeg"
                                 />
                             </label>
-                        </div>*/}
+                        </div>
                         <ReactDatePicker
                             selected={formData.birth_date ? new Date(formData.birth_date) : null}
                             onChange={date => setFormData({ ...formData, birth_date: format(date, 'yyyy-MM-dd') })}
@@ -116,18 +126,6 @@ const ProfileLeftEditModal = ({ isOpen, onClose, user }) => {
             </div>
         </div>
     );
-};
-
-
-ProfileLeftEditModal.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-    user: PropTypes.shape({
-        firstName: PropTypes.string.isRequired,
-        lastName: PropTypes.string.isRequired,
-        birthDate: PropTypes.string.isRequired,
-        //imageURL: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(File)]),
-    }).isRequired,
 };
 
 export default ProfileLeftEditModal;

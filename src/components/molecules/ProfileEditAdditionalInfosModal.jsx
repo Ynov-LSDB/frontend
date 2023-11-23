@@ -16,12 +16,12 @@ const EditAdditionalInfoModal = ({ isOpen, onClose, onSave, userInfos }) => {
     const [editingMode, setEditingMode] = useState('');
     const modalRef = useRef();
 
-    const activeButtonStyle = "bg-white text-gray-800 hover:bg-gray-200";
-    const inactiveButtonStyle = "bg-gray-800 text-white hover:bg-gray-700";
+    const inactiveButtonStyle = "bg-white text-gray-800 hover:bg-gray-200";
+    const activeButtonStyle = "bg-gray-800 text-white hover:bg-gray-700";
 
     const handleClickOutside = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
-            onClose(); // Ferme la modal si l'utilisateur clique en dehors de la modal
+            onClose();
         }
     };
 
@@ -41,8 +41,10 @@ const EditAdditionalInfoModal = ({ isOpen, onClose, onSave, userInfos }) => {
     useEffect(() => {
         if (isOpen) {
             document.addEventListener('mousedown', handleClickOutside);
-            setSearchTermUsers(userInfos.doublette ? userInfos.doublette : '');
-            console.log("userInfos", userInfos);
+
+            const doubletteInitValue = userInfos.doublette && userInfos.doublette !== "Non renseigné" ? userInfos.doublette : '';
+            setSearchTermUsers(doubletteInitValue);
+
             const token = localStorage.getItem("token");
             axios(api("get", "users", null, token, "multipart/form-data", "*/*"))
                 .then((response) => {
@@ -56,12 +58,13 @@ const EditAdditionalInfoModal = ({ isOpen, onClose, onSave, userInfos }) => {
                     console.error("Error fetching users:", error);
                 });
 
-            setSearchTermDrinks( userInfos.boissonPreferee ? userInfos.boissonPreferee : '' );
+            const boissonInitValue = userInfos.boissonPreferee && userInfos.boissonPreferee !== "Non renseigné" ? userInfos.boissonPreferee : '';
+            setSearchTermDrinks(boissonInitValue);
+
             axios(api("get", "drinks", null, token, "multipart/form-data", "*/*"))
                 .then((response) => {
                     if (response.data.success) {
                         setDrinks(response.data.data);
-                        console.log("drinks", drinks);
                     } else {
                         console.error("Failed to fetch users:", response.data.message);
                     }
@@ -90,104 +93,58 @@ const EditAdditionalInfoModal = ({ isOpen, onClose, onSave, userInfos }) => {
     };
 
     const handleSave = () => {
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem("token");
+
         if (editingMode === 'doublette') {
-            if (selectedUser && searchTermUsers !== userInfos.doublette) {
-                const userId = localStorage.getItem('userId');
-                const token = localStorage.getItem("token");
-                const data = new FormData();
-                data.append('doublette_user_id', String(selectedUser.id)); // Assurez-vous que c'est une chaîne si votre backend s'attend à une chaîne
-
-                axios(api("post", `user/${userId}`, data, token, "multipart/form-data", {"Content-Type": "multipart/form-data"}))
-                    .then((response) => {
-                        if (response.data.success) {
-                            console.log('Doublette saved successfully');
-                            onSave(selectedUser.id);
-                            window.location.reload();
-                            onClose();
-                        } else {
-                            console.error('Failed to save doublette:', response.data.message);
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error modify doublette:", error);
-                    });
-            } else if (searchTermUsers === userInfos.doublette){
-                onClose();
-                toast.error("C'est déjà votre doublette.", {
-                    position: "bottom-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined,
-                });
-            } else {
-                onClose();
-                toast.error("Cet(te) utilisateur(trice) n'existe pas.", {
-                    position: "bottom-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined,
-                });
+            let doubletteId = selectedUser ? String(selectedUser.id) : 0;
+            if (searchTermUsers.trim() === '' || searchTermUsers === userInfos.doublette) {
+                doubletteId = 0;
             }
+            const data = new FormData();
+            data.append('doublette_user_id', doubletteId);
+            console.log("doubletteId : " + doubletteId);
+            axios(api("post", `user/${userId}`, data, token, "multipart/form-data", {"Content-Type": "multipart/form-data"}))
+                .then(handleResponse)
+                .catch(handleError);
         }
+
         if (editingMode === 'boisson') {
-            if (selectedDrink && userInfos.boissonPreferee !== selectedDrink.title) {
-                const userId = localStorage.getItem('userId');
-                const token = localStorage.getItem("token");
-                const data = new FormData();
-                data.append('fav_drink_id', String(selectedDrink.id));
-
-                axios(api("post", `user/${userId}`, data, token, "multipart/form-data", {"Content-Type": "multipart/form-data"}))
-                    .then((response) => {
-                        if (response.data.success) {
-                            console.log('Boisson saved successfully');
-                            onSave(selectedDrink.id);
-                            window.location.reload();
-                            onClose();
-                        } else {
-                            console.error('Failed to save boisson:', response.data.message);
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error modify boisson:", error);
-                    });
-            } else {
-                onClose();
-                if (userInfos.boissonPreferee === selectedDrink.title) {
-                    toast.error("C'est déjà votre boisson préférée.", {
-                        position: "bottom-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: true,
-                        progress: undefined,
-                    });
-                } else {
-                    toast.error("Cette boisson n'existe pas.", {
-                        position: "bottom-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: true,
-                        progress: undefined,
-                    });
-                }
+            let drinkId = selectedDrink ? String(selectedDrink.id) : 0;
+            if (searchTermDrinks.trim() === '' || searchTermDrinks === userInfos.boissonPreferee) {
+                drinkId = 0;
             }
+
+            const data = new FormData();
+            data.append('fav_drink_id', drinkId);
+            console.log("drinkId :" + drinkId);
+            axios(api("post", `user/${userId}`, data, token, "multipart/form-data", {"Content-Type": "multipart/form-data"}))
+                .then(handleResponse)
+                .catch(handleError);
         }
+    };
+
+    const handleResponse = (response) => {
+        if (response.data.success) {
+            onSave(editingMode === 'doublette' ? selectedUser.id : selectedDrink.id);
+            window.location.reload();
+            onClose();
+        } else {
+            console.error('Failed to update:', response.data.message);
+        }
+    };
+
+    const handleError = (error) => {
+        console.error("Error during update:", error);
+        toast.error("Une erreur s'est produite lors de la mise à jour.", {
+            position: "bottom-right",
+            autoClose: 5000,
+        });
+        onClose();
     };
 
     const currentUserId = localStorage.getItem('userId');
     const currentDrinkId = userInfos.boissonPrefereeId ? userInfos.boissonPrefereeId : null;
-
-    console.log("currentDrinkId", currentDrinkId);
-    console.log("drink.id", drinks.id);
 
     const filteredUsers = searchTermUsers
         ? users
@@ -271,7 +228,7 @@ const EditAdditionalInfoModal = ({ isOpen, onClose, onSave, userInfos }) => {
                         <>
                             <input
                                 type="text"
-                                placeholder="Rechercher par titre"
+                                placeholder="Rechercher par le nom d'une boisson"
                                 value={searchTermDrinks}
                                 onChange={handleSearchDrinkChange}
                                 className="mt-1 border-gray-300 rounded-md shadow-sm w-full"
