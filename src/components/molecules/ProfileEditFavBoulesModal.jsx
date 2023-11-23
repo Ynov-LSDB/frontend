@@ -7,21 +7,27 @@ const EditFavBoulesModal = ({ isOpen, onClose, userInfos, onSave }) => {
     const [nomFavBoules, setNomFavBoules] = useState(userInfos.nomFavBoules || '');
     const [imageFile, setImageFile] = useState(null);
 
+    const handleFileChange = (e) => {
+        setImageFile(e.target.files[0]);
+    };
+
     const handleSave = () => {
         const userId = localStorage.getItem('userId');
         const token = localStorage.getItem('token');
-        const data = new FormData();
-        data.append('fav_balls_name', nomFavBoules);
+        const formData = new FormData();
+        formData.append('fav_balls_name', nomFavBoules);
+
         if (imageFile) {
-            data.append('image', imageFile);
+            formData.append('imageURL_fav_balls', imageFile);
         }
 
-        axios(api("post", "user/" + userId, data, token))
+        // Utilisez le type de contenu multipart/form-data pour le transfert de fichier.
+        axios(api("post", `user/${userId}`, formData, token, "multipart/form-data"))
             .then(response => {
-                if(response.data.success) {
-                    window.location.reload();
+                if (response.data.success) {
                     onSave(response.data);
                     onClose();
+                    window.location.reload();
                 } else {
                     console.error('Failed to update favorite balls name:', response.data.message);
                 }
@@ -30,6 +36,8 @@ const EditFavBoulesModal = ({ isOpen, onClose, userInfos, onSave }) => {
                 console.error('Error updating favorite balls name:', error);
             });
     };
+
+    if (!isOpen) return null;
 
     if (!isOpen) return null;
 
@@ -44,7 +52,7 @@ const EditFavBoulesModal = ({ isOpen, onClose, userInfos, onSave }) => {
                         onChange={e => setNomFavBoules(e.target.value)}
                         className="mt-1 border-gray-300 rounded-md shadow-sm w-full p-2"
                     />
-                    {/*<div className="flex items-center justify-center bg-grey-lighter mt-4">
+                    <div className="flex items-center justify-center bg-grey-lighter mt-4">
                         <label className="w-full flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue">
                             <span className="mt-2 text-base leading-normal">Sélectionner une photo</span>
                             <input
@@ -54,7 +62,7 @@ const EditFavBoulesModal = ({ isOpen, onClose, userInfos, onSave }) => {
                                 className="hidden"
                             />
                         </label>
-                    </div>*/}
+                    </div>
                     <div className="flex justify-end space-x-4 mt-4">
                         <button
                             type="button"

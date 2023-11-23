@@ -24,7 +24,12 @@ const ProfileRightCards = ({ userInfos }) => {
                 </div>
                 <div className="flex flex-col items-center">
                     <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-center">{userInfos.nomFavBoules}</h2>
-                    <img src={userInfos.imageURL_favBoules} alt="Fav Boules" className="mt-4 w-full max-w-md h-auto object-cover rounded-lg"/>
+                    <img
+                        src={userInfos.imageURL_favBoules}
+                        alt="Fav Boules"
+                        className="mt-4 object-contain rounded-lg"
+                        style={{ maxWidth: '500px', maxHeight: '300px' }}
+                    />
                 </div>
             </Card>
             <div className="flex flex-col space-y-4 w-full sm:w-2/3">
