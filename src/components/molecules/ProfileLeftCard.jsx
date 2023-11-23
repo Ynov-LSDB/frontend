@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ProfileImage from '../atoms/Profile/ProfileImage';
 import ProfileInformationUser from '../atoms/Profile/ProfileInformationUser';
