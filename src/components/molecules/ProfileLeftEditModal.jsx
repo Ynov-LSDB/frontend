@@ -2,14 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import api from "../../toolkit/api.config";
-import { format, parseISO } from 'date-fns';
-import { registerLocale, setDefaultLocale } from "react-datepicker";
-import fr from 'date-fns/locale/fr';
-import ReactDatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 
-registerLocale('fr', fr);
-setDefaultLocale('fr');
 
 const ProfileLeftEditModal = ({ isOpen, onClose, user }) => {
     const modalRef = useRef();
@@ -33,7 +26,7 @@ const ProfileLeftEditModal = ({ isOpen, onClose, user }) => {
             setFormData({
                 firstname: user.firstName,
                 lastname: user.lastName,
-                birth_date: format(parseISO(user.birthDate), 'yyyy-MM-dd'),
+                birth_date: user.birthDate,
                 //imageURL_profile: user.imageURL,
             });
             return document.removeEventListener('mousedown', handleClickOutside);
@@ -106,13 +99,6 @@ const ProfileLeftEditModal = ({ isOpen, onClose, user }) => {
                                 />
                             </label>
                         </div>
-                        <ReactDatePicker
-                            selected={formData.birth_date ? new Date(formData.birth_date) : null}
-                            onChange={date => setFormData({ ...formData, birth_date: format(date, 'yyyy-MM-dd') })}
-                            locale="fr"
-                            dateFormat="dd/MM/yyyy"
-                            className="mt-1 border-gray-300 rounded-md shadow-sm"
-                        />
                         <div className="flex justify-end space-x-4">
                             <button type="button" onClick={onClose} className="px-4 py-2 bg-white text-red-600 border border-red-600 rounded-md shadow-sm hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500">
                                 Annuler

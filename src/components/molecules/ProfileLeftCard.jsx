@@ -38,9 +38,6 @@ const ProfileLeftCard = ({ user }) => {
         setIsModalOpen(false);
     }
 
-    const formattedDate = format(parseISO(user.birthDate), 'dd MMMM yyyy', { locale: fr });
-
-
     return (
         <div className="flex flex-col bg-white shadow-lg rounded-lg w-full sm:w-1/3 lg:w-1/3 pt-20 relative">
             <div className="absolute top-0 right-0 mt-4 mr-4">
@@ -49,7 +46,7 @@ const ProfileLeftCard = ({ user }) => {
                 </button>
             </div>
             <ProfileImage imageURL={user.imageURL} />
-            <ProfileInformationUser firstName={user.firstName} lastName={user.lastName} birthDate={formattedDate} />
+            <ProfileInformationUser firstName={user.firstName} lastName={user.lastName} birthDate={user.birthDate} />
             <div className="flex justify-center items-center p-4">
                 <button onClick={handleLogout} className="bg-red-600 text-white text-xl font-bold rounded-lg px-5 py-2">Déconnexion</button>
             </div>
