@@ -20,12 +20,12 @@ const EventCard = ({ title, description, image, address, categoryId, date, isFoo
                         <div className="w-1/2 p-4 flex flex-col">
                             <h1 className="text-xl font-bold mb-2">{title}</h1>
                             <p className="mb-2">{description}</p>
-                            <p><strong>Addresse:</strong> {address}</p>
-                            <p><strong>Categorie:</strong> {categoryId}</p>
-                            <p><strong>Date:</strong> {formattedDate}</p>
-                            <p>{isFoodOnSite ? 'Ramène ton paté car il y en aura pas' : 'Tout est sur place pas besoin de faire à manger'}</p>
-                            <p><strong>Prix:</strong> {price}€</p>
-                            <p><strong>Equipe:</strong> {teamStyle}</p>
+                            <p><strong>Addresse :</strong> {address}</p>
+                            <p><strong>Categorie :</strong> {categoryId}</p>
+                            <p><strong>Date :</strong> {formattedDate}</p>
+                            <p><strong>Nourriture sur place : </strong>{isFoodOnSite ? 'Ramène ton paté car il y en aura pas' : 'Tout est sur place pas besoin de faire à manger'}</p>
+                            <p><strong>Prix :</strong> {price}€</p>
+                            <p><strong>Equipe :</strong> {teamStyle}</p>
                             {canJoin && (
                                 <button className="bg-green-500 hover:bg-green-700 text-white text-center font-bold py-3 px-5 rounded self-center">
                                     Rejoindre l'événement
