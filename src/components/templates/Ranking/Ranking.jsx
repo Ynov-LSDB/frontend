@@ -6,19 +6,6 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 
-import {
-    TableContainer,
-    Table,
-    TableHead,
-    TableRow,
-    TableCell,
-    TableBody,
-    Paper,
-    Stack,
-    Button,
-    Typography,
-} from '@mui/material';
-
 import axios from 'axios';
 import api from "../../../toolkit/api.config";
 
@@ -45,15 +32,15 @@ const Ranking = () => {
 
     const [pagination, setPagination] = useState({
       pageIndex: 0, // page index matlab = page number
-      pageSize: 10, // page size matlab = limit
+      pageSize: 25, // page size matlab = limit
     });
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(false);
 
      useEffect(() => {
         setLoading(true);
-        console.log("users/ranking?page=" + (pagination.pageIndex + 1))
-        axios(api("get", "users/ranking?page=" + (pagination.pageIndex + 1)
+        console.log(api("get", "users/ranking?page=" + (pagination.pageIndex + 1) + "&size=" + pagination.pageSize))
+        axios(api("get", "users/ranking?page=" + (pagination.pageIndex + 1) + "&size=" + pagination.pageSize
         )).then((response) => {
             let data = response.data.data;
             data.data.forEach((_, index) => {
@@ -81,62 +68,62 @@ const Ranking = () => {
     });
     
     return (
-        <div>
+        <div className="flex justify-center">
             {loading 
                 ? (<Loader />)
-                :<TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
+                :<div className="relative overflow-x-auto shadow-md sm:rounded-lg my-5 w-3/4">
+                    <table className="w-full text-sm text-gray-500">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 h-10 border-b-4 text-center">
                             {table.getHeaderGroups().map((headerGroup) => (
-                                <TableRow key={headerGroup.id}>
+                                <tr className="px-6 py-3">
                                     {headerGroup.headers.map((header) => (
-                                        <TableCell variant="head" key={header.id}>
+                                        <th>
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
                                                     header.column.columnDef.header,
                                                     header.getContext()
                                             )}
-                                        </TableCell>
+                                        </th>
                                     ))}
-                                </TableRow>
+                                </tr>
                             ))}
-                        </TableHead>
-                        <TableBody>
+                        </thead>
+                        <tbody>
                             { table.getRowModel().rows.map((row) => (
-                                <TableRow key={row.id}>
+                                <tr className="border-b border-gray-200">
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>
+                                        <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                        </TableCell>
+                                        </th>
                                     ))}
-                                </TableRow>
+                                </tr>
                             ))}
-                        </TableBody>
-                    </Table>
-                    <Stack direction="row" justifyContent={'space-between'} sx={{ p: 3 }}>
-                        <Button
+                        </tbody>
+                    </table>
+                        <div className="w-full text-xs text-gray-700 uppercase bg-gray-50 border-t-4 h-14 flex justify-center items-center content-center">
+                        <button
                             disabled={!table.getCanPreviousPage()}
                             onClick={() => table.previousPage()}
                             color="primary"
                             variant="contained"
                         >
-                            <FaChevronLeft />
-                        </Button>
-                        <Typography>
+                            <FaChevronLeft size={20} />
+                        </button>
+                        <span className="text-lg mx-3">
                             {table.getState().pagination.pageIndex + 1} /{' '}
                             {table.getPageCount()}
-                        </Typography>
-                        <Button
+                        </span>
+                        <button
                             disabled={!table.getCanNextPage()}
                             onClick={() => table.nextPage()}
                             color="primary"
                             variant="contained"
                         >
-                            <FaChevronRight />
-                        </Button>
-                    </Stack>
-                </TableContainer>
+                            <FaChevronRight size={20} />
+                        </button>
+                    </div>
+                </div>
             }
         </div> 
     );
