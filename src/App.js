@@ -13,34 +13,14 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import Ranking from "./components/templates/Ranking/Ranking";
 
 function App() {
-  const [activePage, setActivePage] = useState("Home")
-
-  const menu = [
-    {
-        label: "Home",
-        icon: <FaHome />,
-        action: () => {
-          console.log("Home clicked")
-          setActivePage("Home")
-        }
-    },
-    {
-        label: "Shop",
-        icon: <FaShoppingBasket />,
-        action: () => {
-          console.log("Shop clicked")
-          setActivePage("Shop")
-        }
-    },
-    {
-        label: "About",
-        icon: <FaInfo />,
-        action: () => {
-          console.log("About clicked")
-          setActivePage("About")
-        }
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const token = localStorage.getItem('token')
+  useEffect(() => {
+    if (token) {
+      setIsLoggedIn(true);
     }
-  ]
+  }, []);
+
   return (
     <div className='App'> 
       <ToastContainer position="bottom-right"
@@ -62,6 +42,7 @@ function App() {
         <Route path="/auth/register" element={<Register />} />
       </Routes>
     </div>
+
   );
 }
 

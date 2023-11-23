@@ -9,7 +9,7 @@ export default function Header({isLoggedIn, setIsLoggedIn}) {
     const isActive = (path) => location.pathname === path;
 
     return (
-        <header className={Style.header}>
+        <header className={`bg-gray-800 h-16 flex items-center p-2 relative ${Style.header}`}>
             <img src={Logo} alt="Logo" className={Style.logo} />
             <ul className="flex-grow flex justify-center space-x-4">
                 <Link to="/" className={`flex items-center text-white text-lg font-bold ${Style.link} ${isActive('/') ? Style.linkActive : ''}`}>
@@ -36,7 +36,5 @@ export default function Header({isLoggedIn, setIsLoggedIn}) {
                 )}
             </div>
         </header>
-    )
+    );
 }
-
-export default Header;
