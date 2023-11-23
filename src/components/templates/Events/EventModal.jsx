@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 const EventModal = ({ isOpen, onClose }) => {
 
     const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
     const [date, setDate] = useState("");
     const [price, setPrice] = useState("");
     const [categories, setCategories] = useState([]);
@@ -32,6 +33,7 @@ const EventModal = ({ isOpen, onClose }) => {
 
     const dataEvent = {
         title: title,
+        description: description,
         date: date,
         price: price,
         category_id: category_id,
@@ -80,7 +82,7 @@ const EventModal = ({ isOpen, onClose }) => {
     return (
         <>
             {isOpen && (
-                <div className="fixed inset-0 bg-gray-600 bg-opacity-80 flex justify-center items-center h-screen">
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-80 flex justify-center items-center">
                     <div className="bg-gray-800 rounded-lg shadow-xl max-w-3xl w-full mx-auto p-6">
                         <div className="mt-3 text-center">
                             <h3 className="text-white text-3xl font-semibold mb-4">Créer un événement</h3>
@@ -90,6 +92,12 @@ const EventModal = ({ isOpen, onClose }) => {
                                         Titre
                                     </label>
                                     <input type="text" id="title" name="title" className="w-full px-3 py-2 border rounded-lg" value={title} onChange={(e) => { setTitle(e.target.value) }}/>
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="description" className="block text-white text-sm font-bold mb-2">
+                                        Description
+                                    </label>
+                                    <input type="textarea" id="description" name="description" className="w-full px-3 py-2 border rounded-lg" value={description} onChange={(e) => { setDescription(e.target.value) }}/>
                                 </div>
                                 <div className="flex flex-wrap -mx-4">
                                     <div className="mb-4 px-4 w-full md:w-1/2">
