@@ -7,7 +7,7 @@ import {
 import axios from 'axios';
 import api from "../../toolkit/api.config";
 
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import {FaChevronLeft, FaChevronRight, FaMedal} from "react-icons/fa";
 
 // Atoms
 import Loader from "../atoms/Loader";
@@ -49,6 +49,21 @@ const Leaderboard = () => {
         onPaginationChange: setPagination,
         getCoreRowModel: getCoreRowModel(),
     });
+
+    function getRankContent(rank) {
+        // Déterminez le contenu à afficher en fonction du rang
+        switch (rank) {
+            case 1:
+                return <FaMedal className="text-yellow-400" size={25} />;
+            case 2:
+                return <FaMedal className="text-gray-300" size={25} />;
+            case 3:
+                return <FaMedal className="text-yellow-700" size={25} />;
+            default:
+                return rank;
+        }
+    }
+
     
     return (
         <div className="flex justify-center">
@@ -64,21 +79,21 @@ const Leaderboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            { table.getRowModel().rows.map((row) => (
-                                <tr className="border-b border-gray-200">
-                                    <th className="font-medium text-gray-900 whitespace-nowrap bg-gray-50 py-2 flex justify-center">
-                                        <div className={getRankStyle(row.original.rank)}>
-                                            {row.original.rank}
-                                        </div>
-                                    </th>
-                                    <th className="font-medium text-gray-900 whitespace-nowrap bg-gray-50">
-                                        {row.original.name}
-                                    </th>
-                                    <th className="font-medium text-gray-900 whitespace-nowrap bg-gray-50">
-                                        {row.original.score}
-                                    </th>
-                                </tr>
-                            ))}
+                        {table.getRowModel().rows.map((row) => (
+                            <tr key={row.original.id} className="border-b border-gray-200">
+                                <th className="font-medium text-gray-900 whitespace-nowrap bg-gray-50 py-2 flex justify-center">
+                                    <div className={`flex items-center justify-center h-full w-full ${row.original.rank <= 3 ? 'p-1' : ''}`}>
+                                        {getRankContent(row.original.rank)}
+                                    </div>
+                                </th>
+                                <th className="font-medium text-gray-900 whitespace-nowrap bg-gray-50">
+                                    {row.original.name}
+                                </th>
+                                <th className="font-medium text-gray-900 whitespace-nowrap bg-gray-50">
+                                    {row.original.score}
+                                </th>
+                            </tr>
+                        ))}
                         </tbody>
                     </table>
                     <div className="w-full text-xs text-gray-700 uppercase bg-gray-50 border-t-4 h-12 flex items-center">
