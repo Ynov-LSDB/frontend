@@ -37,8 +37,8 @@ const UserProfile = () => {
     console.log("userData " + userData)
     if (!userData) {
         return (
-            <div className="flex justify-center items-center ">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+            <div className="flex justify-center items-center m-40">
+                <div className="animate-spin rounded-full h-40 w-40 border-b-2 border-gray-800"></div>
             </div>
         );
     }
