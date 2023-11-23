@@ -1,10 +1,11 @@
 import React from "react";
+
 //Internal imports
 import Style from "./Button.module.css";
 
-const Button = ({buttonTitle, icon, action, activePage}) => {
+const Button = ({buttonTitle, icon, action}) => {
     return (
-        <div className={activePage !== buttonTitle ? Style.button : Style.activeButton} onClick={action}>{icon} {buttonTitle} </div>
+        <div className={Style.button} onClick={action}>{icon} {buttonTitle} </div>
     );
 }
 
