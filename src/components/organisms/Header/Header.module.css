@@ -63,11 +63,11 @@
 }
 
 .link:hover::after, .link.active::after {
-    width: 110%;
+    width: 105%;
 }
 
 .linkActive::after {
-    width: 110%;
+    width: 105%;
 }
 
 
