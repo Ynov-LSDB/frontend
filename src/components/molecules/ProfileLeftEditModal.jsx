@@ -99,6 +99,7 @@ const ProfileLeftEditModal = ({ isOpen, onClose, user }) => {
                                 />
                             </label>
                         </div>
+                        <input type="date" name="birth_date" value={formData.birth_date} onChange={handleInputChange} className="mt-1 border-gray-300 rounded-md shadow-sm" />
                         <div className="flex justify-end space-x-4">
                             <button type="button" onClick={onClose} className="px-4 py-2 bg-white text-red-600 border border-red-600 rounded-md shadow-sm hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500">
                                 Annuler
