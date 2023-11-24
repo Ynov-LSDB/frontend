@@ -32,7 +32,7 @@ const UserProfile = () => {
     console.log("userData " + userData)
     if (!userData) {
         return (
-            <div className="flex justify-center items-center content-center">
+            <div className="flex justify-center items-center h-screen">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
             </div>
         );
@@ -49,7 +49,7 @@ const UserProfile = () => {
     const userInfosProps = {
         imageURL_favBoules: userData.imageURL_fav_balls || ImageFavBoules,
         nomFavBoules: userData.fav_balls_name || "Mes boules favorites",
-        imageURL_event: "",
+        imageURL_event: "test",
         classement: userData.rank_id,
         doublette: userData.doublette ? `${userData.doublette.firstname} ${userData.doublette.lastname}` : 'Non renseigné',
         boissonPreferee: userData.drink ?  userData.drink.title : "Non renseigné",
