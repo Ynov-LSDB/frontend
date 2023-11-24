@@ -35,7 +35,7 @@ const UserProfile = () => {
         fetchUserProfile();
     }, []);
 
-    if (!userData || !eventData) {
+    if (!userData) {
         return (
             <div className="flex justify-center items-center h-screen">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
@@ -43,7 +43,7 @@ const UserProfile = () => {
         );
     }
 
-
+    // Définition des props pour le composant ProfileLeftCard
     const userProps = {
         imageURL: userData.imageURL_profile || PhotoProfile,
         firstName: userData.firstname,
@@ -51,16 +51,14 @@ const UserProfile = () => {
         birthDate: userData.birth_date,
     };
 
-
+    // Définition des props pour le composant ProfileRightCards
     const userInfosProps = {
         imageURL_favBoules: userData.imageURL_fav_balls || ImageFavBoules,
         nomFavBoules: userData.fav_balls_name || "Mes boules favorites",
         classement: userData.rank_id,
-
         doublette: userData.doublette ? `${userData.doublette.firstname} ${userData.doublette.lastname}` : 'Non renseigné',
-        boissonPreferee: userData.drink ?  userData.drink.title : "Non renseigné",
-        boissonPrefereeId: userData.drink ?  userData.drink.id : null,
-
+        boissonPreferee: userData.drink ? userData.drink.title : "Non renseigné",
+        boissonPrefereeId: userData.drink ? userData.drink.id : null,
         nextEventTitle: eventData ? eventData.title : "Aucun évènement à venir",
         nextEventDate: eventData ? eventData.date : null,
         nextEventAddress: eventData ? eventData.adresse : null,
