@@ -1,11 +1,38 @@
 import React, { useState } from "react";
-const EventCard = ({ title, description, image, address, categoryId, date, isFoodOnSite, price, teamStyle, canJoin = true }) => {
+import axios from "axios";
+import api from "../../../toolkit/api.config";
+import { toast } from 'react-toastify';
+
+const EventCard = ({ title, description, image, address, categoryId, date, isFoodOnSite, price, teamStyle, canJoin = true, eventId }) => {
     const [showPopup, setShowPopup] = useState(false);
+    const [joinedEvent, setJoinedEvent] = useState(false); // Nouvel état pour indiquer si l'utilisateur a rejoint l'événement
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
     const formattedDate = new Date(date).toLocaleDateString('fr-FR', options);
+    const token = localStorage.getItem("token");
 
     const toggleShowPopup = () => {
         setShowPopup(!showPopup);
+    };
+
+    const handleJoinEvent = async () => {
+        try {
+            const response = await axios(api("get", `user/joinEvent/${eventId}`, null, token));
+            console.log(response.data);
+            setJoinedEvent(true);
+            toast("Vous avez rejoint l'événement ✅", {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            }
+            )
+        } catch (error) {
+            console.error("Error joining event:", error.response);
+        }
     };
 
     return (
@@ -20,29 +47,29 @@ const EventCard = ({ title, description, image, address, categoryId, date, isFoo
                         <div className="w-1/2 p-4 flex flex-col">
                             <h1 className="text-xl font-bold mb-2">{title}</h1>
                             <p className="mb-2">{description}</p>
-                            <p><strong>Addresse :</strong> {address}</p>
-                            <p><strong>Categorie :</strong> {categoryId}</p>
+                            <p><strong>Adresse :</strong> {address}</p>
+                            <p><strong>Catégorie :</strong> {categoryId}</p>
                             <p><strong>Date :</strong> {formattedDate}</p>
-                            <p><strong>Nourriture sur place : </strong>{isFoodOnSite ? 'Ramène ton paté car il y en aura pas' : 'Tout est sur place pas besoin de faire à manger'}</p>
+                            <p><strong>Nourriture sur place :</strong> {isFoodOnSite ? 'Ramène ton paté car il y en aura pas' : 'Tout est sur place pas besoin de faire à manger'}</p>
                             <p><strong>Prix :</strong> {price}€</p>
-                            <p><strong>Equipe :</strong> {teamStyle}</p>
-                            {canJoin && (
-                                <button className="bg-green-500 hover:bg-green-700 text-white text-center font-bold py-3 px-5 rounded self-center">
+                            <p><strong>Équipe :</strong> {teamStyle}</p>
+                            {canJoin && !joinedEvent && (
+                                <button onClick={handleJoinEvent} className="bg-green-500 hover:bg-green-700 text-white text-center font-bold py-3 px-5 rounded self-center">
                                     Rejoindre l'événement
                                 </button>
+                            )}
+                            {joinedEvent && (
+                                <p className="text-green-500">Vous avez rejoint cet événement.</p>
                             )}
                         </div>
                     </div>
                 </div>
-
             )}
             <button onClick={toggleShowPopup} className="bg-gray hover:bg-gray-700 text-white font-bold py-3 px-5 rounded">
                 En savoir plus
             </button>
-
         </div>
     );
 };
-
 
 export default EventCard;

@@ -116,6 +116,7 @@ const Events = ({ isLoggedIn, setIsLoggedIn }) => {
                         price={event.price}
                         teamStyle={event.team_style}
                         canJoin={isLoggedIn}
+                        eventId={event.id}
                     />
                 )) : <div className="text-center text-3xl text-white p-4">{userisIn ?
                     "Vous n'êtes dans aucun évènement... allé dont en rejoindre un !" :
