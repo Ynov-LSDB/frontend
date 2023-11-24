@@ -47,13 +47,19 @@ const ProfileRightCards = ({ userInfos }) => {
                 />
             </div>
             <Card className="relative flex-1 flex flex-col md:flex-row">
-                <div className="absolute top-0 right-0 mt-4 mr-4">
+                <div className="absolute top-0 left-1/3 mt-4 mr-4">
                     <button onClick={handleBottomEdit} className="text-white bg-gray-800 rounded-full p-2 transition-transform duration-300 hover:scale-110">
                         <FaPencilAlt />
                     </button>
                 </div>
                 <UserInfo {...userInfos} />
-                <EventPreview imageURL={userInfos.imageURL_event} title="Mon prochain évènement" />
+                <EventPreview
+                    title={userInfos.nextEventTitle}
+                    image={userInfos.nextEventImage}
+                    date={userInfos.nextEventDate}
+                    location={userInfos.nextEventLocation}
+                    desc={userInfos.nextEventDescription}
+                />
             </Card>
         </div>
     );

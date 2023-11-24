@@ -69,7 +69,7 @@ const Leaderboard = () => {
         <div className="flex justify-center">
             {loading 
                 ? (<Loader />)
-                :<div className="relative overflow-x-auto shadow-md sm:rounded-lg my-5 w-3/5">
+                :<div className="relative overflow-x-auto shadow-md sm:rounded-lg my-5 w-3/5 ">
                     <table className="w-full text-sm text-gray-500">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 h-12 border-b-4 text-center">
                             <tr className="px-6 py-3 text-base">

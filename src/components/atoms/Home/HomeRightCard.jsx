@@ -8,7 +8,7 @@ const HomeRightCard = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        const params = new URLSearchParams({ size: 3 }); // Limite à 3
+        const params = new URLSearchParams({ size: 3 });
 
         axios(api("get", `users/ranking?${params.toString()}`, null, token))
             .then((response) => {
@@ -48,7 +48,7 @@ const HomeRightCard = () => {
 
     return (
         <div className="bg-white shadow-lg rounded-lg p-4 flex flex-col">
-            <h2 className="text-xl font-bold mb-4 text-center">Découvrez nos meilleurs boulistes !</h2>
+            <h2 className="text-xl font-bold mb-4 text-center">Découvre nos meilleurs boulistes !</h2>
             {renderRanking()}
             <div className="mt-auto text-left">
                 <button

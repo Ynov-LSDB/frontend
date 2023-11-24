@@ -8,29 +8,34 @@ import api from "../../toolkit/api.config";
 
 const UserProfile = () => {
     const [userData, setUserData] = useState(null);
+    const [eventData, setEventData] = useState(null);
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
         const token = localStorage.getItem('token');
-        console.log(userId);
 
-        axios(api("get", "me", null, token))
-            .then(response => {
-                if (response.data.success) {
-                    setUserData(response.data.data);
-                    console.log("UserPorfile, response.data.data : ");
-                    console.log(response);
+        const fetchUserProfile = async () => {
+            try {
+                const responseUser = await axios(api("get", "me", null, token));
+                if (responseUser.data.success) {
+                    setUserData(responseUser.data.data);
                 } else {
                     console.error('User not found');
                 }
-            })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
-            });
+
+                const responseEvent = await axios(api("get", "user/nextEvent", null, token));
+                if (responseEvent.data.success) {
+                    setEventData(responseEvent.data.data);
+                }
+            } catch (error) {
+                console.error('Error fetching user or event data:', error);
+            }
+        };
+
+        fetchUserProfile();
     }, []);
 
-    console.log("userData " + userData)
-    if (!userData) {
+    if (!userData || !eventData) {
         return (
             <div className="flex justify-center items-center h-screen">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
@@ -46,14 +51,20 @@ const UserProfile = () => {
         birthDate: userData.birth_date,
     };
 
+
     const userInfosProps = {
         imageURL_favBoules: userData.imageURL_fav_balls || ImageFavBoules,
         nomFavBoules: userData.fav_balls_name || "Mes boules favorites",
-        imageURL_event: "test",
         classement: userData.rank_id,
+
         doublette: userData.doublette ? `${userData.doublette.firstname} ${userData.doublette.lastname}` : 'Non renseigné',
         boissonPreferee: userData.drink ?  userData.drink.title : "Non renseigné",
         boissonPrefereeId: userData.drink ?  userData.drink.id : null,
+
+        nextEventTitle: eventData ? eventData.title : "Aucun évènement à venir",
+        nextEventDate: eventData ? eventData.date : null,
+        nextEventAddress: eventData ? eventData.adresse : null,
+        nextEventDescription: eventData ? eventData.description : null,
     };
 
     return (
