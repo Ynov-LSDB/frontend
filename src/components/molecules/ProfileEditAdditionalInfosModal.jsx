@@ -16,6 +16,10 @@ const EditAdditionalInfoModal = ({ isOpen, onClose, onSave, userInfos }) => {
     const [editingMode, setEditingMode] = useState('');
     const modalRef = useRef();
 
+    // Déclarer doubletteId et drinkId ici
+    let doubletteId = 0;
+    let drinkId = 0;
+
     const inactiveButtonStyle = "bg-white text-gray-800 hover:bg-gray-200";
     const activeButtonStyle = "bg-gray-800 text-white hover:bg-gray-700";
 
@@ -97,30 +101,61 @@ const EditAdditionalInfoModal = ({ isOpen, onClose, onSave, userInfos }) => {
         const token = localStorage.getItem("token");
 
         if (editingMode === 'doublette') {
-            let doubletteId = selectedUser ? String(selectedUser.id) : 0;
-            if (searchTermUsers.trim() === '' || searchTermUsers === userInfos.doublette) {
-                doubletteId = 0;
+            // Permettre une sauvegarde avec un champ vide pour la doublette
+            if (!searchTermUsers.trim()) {
+                let doubletteId = 0;
+
+                const data = new FormData();
+                data.append('doublette_user_id', doubletteId);
+                console.log("doubletteId : " + doubletteId);
+                axios(api("post", `user/${userId}`, data, token, "multipart/form-data", {"Content-Type": "multipart/form-data"}))
+                    .then(handleResponse)
+                    .catch(handleError);
+            } else if (selectedUser && searchTermUsers === `${selectedUser.firstname} ${selectedUser.lastname}`) {
+                let doubletteId = String(selectedUser.id);
+
+                const data = new FormData();
+                data.append('doublette_user_id', doubletteId);
+                console.log("doubletteId : " + doubletteId);
+                axios(api("post", `user/${userId}`, data, token, "multipart/form-data", {"Content-Type": "multipart/form-data"}))
+                    .then(handleResponse)
+                    .catch(handleError);
+            } else {
+                // Afficher un message d'erreur si la sélection ne correspond pas
+                toast.error("Sélection de doublette invalide. Veuillez choisir un utilisateur de la liste ou laisser le champ vide pour la suppression.", {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                });
             }
-            const data = new FormData();
-            data.append('doublette_user_id', doubletteId);
-            console.log("doubletteId : " + doubletteId);
-            axios(api("post", `user/${userId}`, data, token, "multipart/form-data", {"Content-Type": "multipart/form-data"}))
-                .then(handleResponse)
-                .catch(handleError);
         }
 
         if (editingMode === 'boisson') {
-            let drinkId = selectedDrink ? String(selectedDrink.id) : 0;
-            if (searchTermDrinks.trim() === '' || searchTermDrinks === userInfos.boissonPreferee) {
-                drinkId = 0;
-            }
+            // Permettre une sauvegarde avec un champ vide
+            if (!searchTermDrinks.trim()) {
+                let drinkId = 0;
 
-            const data = new FormData();
-            data.append('fav_drink_id', drinkId);
-            console.log("drinkId :" + drinkId);
-            axios(api("post", `user/${userId}`, data, token, "multipart/form-data", {"Content-Type": "multipart/form-data"}))
-                .then(handleResponse)
-                .catch(handleError);
+                const data = new FormData();
+                data.append('fav_drink_id', drinkId);
+                console.log("drinkId :" + drinkId);
+                axios(api("post", `user/${userId}`, data, token, "multipart/form-data", {"Content-Type": "multipart/form-data"}))
+                    .then(handleResponse)
+                    .catch(handleError);
+            } else if (selectedDrink && searchTermDrinks === selectedDrink.title) {
+                let drinkId = String(selectedDrink.id);
+
+                const data = new FormData();
+                data.append('fav_drink_id', drinkId);
+                console.log("drinkId :" + drinkId);
+                axios(api("post", `user/${userId}`, data, token, "multipart/form-data", {"Content-Type": "multipart/form-data"}))
+                    .then(handleResponse)
+                    .catch(handleError);
+            } else {
+                // Afficher un message d'erreur si la sélection ne correspond pas
+                toast.error("Sélection de boisson invalide. Veuillez choisir une boisson de la liste ou laisser le champ vide pour la suppression.", {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                });
+            }
         }
     };
 
@@ -136,10 +171,19 @@ const EditAdditionalInfoModal = ({ isOpen, onClose, onSave, userInfos }) => {
 
     const handleError = (error) => {
         console.error("Error during update:", error);
-        toast.error("Une erreur s'est produite lors de la mise à jour.", {
-            position: "bottom-right",
-            autoClose: 5000,
-        });
+
+        // Vérifier si doubletteId ou drinkId est égal à 0 lorsqu'une erreur se produit
+        const isErrorDueToZeroId = (editingMode === 'doublette' && doubletteId === 0) ||
+            (editingMode === 'boisson' && drinkId === 0);
+
+        if (isErrorDueToZeroId) {
+            window.location.reload();
+        } else {
+            toast.error("Une erreur s'est produite lors de la mise à jour.", {
+                position: "bottom-right",
+                autoClose: 5000,
+            });
+        }
         onClose();
     };
 
