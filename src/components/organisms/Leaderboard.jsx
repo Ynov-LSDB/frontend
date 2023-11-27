@@ -23,7 +23,6 @@ const Leaderboard = () => {
 
      useEffect(() => {
         setLoading(true);
-        console.log(api("get", "users/ranking?page=" + (pagination.pageIndex + 1) + "&size=" + pagination.pageSize))
         axios(api("get", "users/ranking?page=" + (pagination.pageIndex + 1) + "&size=" + pagination.pageSize
         )).then((response) => {
             let data = response.data.data;

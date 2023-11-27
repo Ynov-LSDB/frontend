@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../../toolkit/api.config";
 import { FaUserGroup, FaLocationDot, FaMoneyBillWave } from "react-icons/fa6";
 import { FaCalendarDay } from "react-icons/fa";
 
@@ -10,7 +11,7 @@ const HomeLeftCard = () => {
     useEffect(() => {
         setLoading(true);
         setTimeout(2000)
-        axios.get('http://localhost:80/api/event/last')
+        axios(api("get", "event/last"))
             .then(response => {
                 if (response.data.success) {
                     setEvent(response.data.data);
