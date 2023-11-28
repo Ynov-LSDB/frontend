@@ -1,6 +1,6 @@
 # LSDB - Le Site De Boules  
 
-Le Site De Boules (LSDB) est une plateforme interactive conçue pour les amateurs et professionnels de la pétanque. Elle propose divers outils pour améliorer l'expérience de jeu, se connecter et socialiser avec d'autres joueurs lors d'évènemnts.
+Le Site De Boules (LSDB) est une plateforme interactive conçue pour les amateurs et professionnels de la pétanque. Elle propose divers outils pour améliorer l'expérience de jeu, se connecter et socialiser avec d'autres joueurs lors d'évènements.
 
 ## Fonctionnalités Clés
 
@@ -12,10 +12,10 @@ Le Site De Boules (LSDB) est une plateforme interactive conçue pour les amateur
 ## Prérequis
 
 Avant de commencer, assurez-vous d'avoir installé les outils suivants sur votre machine :
-
-- Git
-- Node.js
-- npm 
+- [npm (10.2.x)](https://www.npmjs.com/)
+- [node (21.2.x)](https://nodejs.org/en/download/)
+- [Docker (24.0.x)](https://docs.docker.com/engine/install/)
+- [Git (2.43.x)](https://git-scm.com/downloads)
 
 ## Installation
 
@@ -48,3 +48,14 @@ Une fois la configuration terminée, lancez le projet en exécutant la commande 
 ```bash
 npm start
 ```
+
+## Liens Utiles
+
+- Pour faire fonctionner ce site il faut installer : [backend LSDB](https://github.com/Ynov-LSDB/backend)
+
+## Authors
+
+- [@QuentinSAIL](https://www.github.com/QuentinSAIL)
+- [@MatteoDinville](https://github.com/MatteoDinville)
+- [@GuilhemTrd](https://github.com/GuilhemTrd)
+- [@HPOIZAT](https://github.com/HPOIZAT)
