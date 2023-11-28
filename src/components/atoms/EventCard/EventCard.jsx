@@ -35,6 +35,27 @@ const EventCard = ({ title, description, image, address, categoryId, date, isFoo
         }
     };
 
+    const handleLeaveEvent = async () =>
+    {
+        try {
+            const response = await axios(api("get", `user/leaveEvent/${eventId}`, null, token));
+            console.log(response.data);
+            setJoinedEvent(false);
+            toast("Vous avez quitté l'événement ❌", {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            }
+            )
+        } catch (error) {
+            console.error("Error leaving event:", error.response);
+        }
+    }
     return (
         <div className="shadow-lg text-center p-2.5 bg-gray-800 text-white m-2.5 w-[500px] rounded-md">
             <img src={image} className="w-full h-[300px] object-cover rounded-t-md" />
@@ -59,7 +80,9 @@ const EventCard = ({ title, description, image, address, categoryId, date, isFoo
                                 </button>
                             )}
                             {joinedEvent && (
-                                <p className="text-green-500">Vous avez rejoint cet événement.</p>
+                                <button onClick={handleLeaveEvent} className="bg-red-500 hover:bg-red-700 text-white text-center font-bold py-3 px-5 rounded self-center">
+                                    Quitter l'événement
+                                </button>
                             )}
                         </div>
                     </div>
