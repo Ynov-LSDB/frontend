@@ -3,34 +3,48 @@ import axios from "axios";
 import api from "../../../toolkit/api.config";
 import EventCard from "../../atoms/EventCard/EventCard";
 import ConcoursBase from "../../../assets/images/concours-base.jpg";
+import { useReactTable, getCoreRowModel } from "@tanstack/react-table";
+import {FaChevronLeft, FaChevronRight, FaMedal} from "react-icons/fa";
+import Loader from "../../atoms/Loader";
 
 const Events = () => {
-    const [events, setEvents] = useState(null);
+    const [pagination, setPagination] = useState({
+        pageIndex: 0, // page index matlab = page number
+        pageSize: 6, // page size matlab = limit
+    });
+    const [loading, setLoading] = useState(false);
+
+    const [events, setEvents] = useState({});
     const [userisIn, setUserisIn] = useState(true);
 
-    const fetchData = async () => {
-        try {
-            const token = localStorage.getItem("token");
-            const response = await axios(api("get", userisIn ? "user/inEvent" : "user/notInEvent", null, token));
-
-            if (response.data.success) {
-                console.log(response.data.data)
-                setEvents(response.data.data);
-            } else {
-                console.error("Error:", response.data.message);
-            }
-        } catch (error) {
-            console.error("Error fetching Event data:", error);
-        }
-    };
-
     useEffect(() => {
-        fetchData().then(() => console.log("Events fetched"));
-    }, []); // for initial mount
+        setLoading(true);
+        const token = localStorage.getItem("token");
+        axios(api(
+            "get",
+            (userisIn ? "user/inEvent" : "user/notInEvent") + "?page=" + (pagination.pageIndex + 1) + "&size=" + pagination.pageSize,
+            null,
+            token
+        )).then((response) => {
+            let data = response.data.data;
+            console.log(data);
+            setEvents(data);
+            setLoading(false);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, [userisIn, pagination]);
 
-    useEffect(() => {
-        fetchData().then(() => console.log("Events fetched"));
-    }, [userisIn]);
+    const table = useReactTable({
+        data: events.data || [],
+        state: {
+            pagination
+        },
+        pageCount: events.last_page,
+        manualPagination: true,
+        onPaginationChange: setPagination,
+        getCoreRowModel: getCoreRowModel(),
+    });
 
     return (
         <div className="flex flex-col items-center bg-opacity-80 p-5">
@@ -45,25 +59,57 @@ const Events = () => {
                     {userisIn ? "Rejoindre des évenements" : "Mes évenements"}
                 </button>
             </div>
-            <div className="flex flex-wrap justify-around w-4/5 mt-4">
-                {events && events.length > 0 ? events.map((event, index) => (
-                    <EventCard
-                        key={index}
-                        title={event.title}
-                        description={event.description}
-                        image={event.imageURL || ConcoursBase}
-                        adresse={event.adresse}
-                        categoryId={event.category_id}
-                        date={event.date}
-                        isFoodOnSite={event.is_food_on_site}
-                        price={event.price}
-                        teamStyle={event.team_style}
-                        canJoin={!userisIn}
-                    />
-                )): <div className="text-center text-3xl text-white p-4">{userisIn ?
-                    "Vous n'êtes dans aucun évènement... allé dont en rejoindre un !" :
-                    "Vous chômez pas ! vous êtes déjà inscrit sur tout ce qui est possible et imaginable !"}</div> }
-            </div>
+            {loading
+                ? (<Loader />)
+                :<div className="mt-4">
+                    {events.data && events.data.length > 0
+                        ?   <div>
+                                <div className="flex flex-wrap justify-center mt-4">
+                                    {events.data.map((event, index) => (
+                                        <EventCard
+                                        key={index}
+                                        title={event.title}
+                                        description={event.description}
+                                        image={event.imageURL || ConcoursBase}
+                                        adresse={event.adresse}
+                                        categoryId={event.category_id}
+                                        date={event.date}
+                                        isFoodOnSite={event.is_food_on_site}
+                                        price={event.price}
+                                        teamStyle={event.team_style}
+                                        canJoin={!userisIn}
+                                        />
+                                    ))}
+                                </div>
+                                <div className="flex justify-center mt-4 py-2 ml-auto mr-auto bg-gray-700 w-fit rounded-md">
+                                    <button
+                                        disabled={!table.getCanPreviousPage()}
+                                        onClick={() => table.previousPage()}
+                                        variant="contained"
+                                        className="text-white"
+                                    >
+                                        <FaChevronLeft size={28} />
+                                    </button>
+                                    <span className="text-xl mx-3 text-white text-lg">
+                                        {table.getState().pagination.pageIndex + 1} /{' '}
+                                        {table.getPageCount()}
+                                    </span>
+                                    <button
+                                        disabled={!table.getCanNextPage()}
+                                        onClick={() => table.nextPage()}
+                                        color="primary"
+                                        variant="contained"
+                                        className="text-white"
+                                    >
+                                        <FaChevronRight size={28} />
+                                    </button>
+                                </div>
+                            </div>
+                        : <div className="text-center text-3xl text-white p-4">{userisIn ?
+                            "Vous n'êtes dans aucun évènement... allé dont en rejoindre un !" :
+                            "Vous chômez pas ! vous êtes déjà inscrit sur tout ce qui est possible et imaginable !"}
+                        </div> }
+                </div>}
         </div>
     );
 };
