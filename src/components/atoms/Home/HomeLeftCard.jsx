@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../../toolkit/api.config";
 import { FaUserGroup, FaLocationDot, FaMoneyBillWave } from "react-icons/fa6";
-import { FaCalendarDay } from "react-icons/fa";
+import {FaCalendarDay, FaList} from "react-icons/fa";
+import {IoFastFood} from "react-icons/io5";
 
 const HomeLeftCard = () => {
     const [nextEvent, setEvent] = useState(null)
@@ -39,12 +40,10 @@ const HomeLeftCard = () => {
                         <p className="mb-1 flex"> <FaCalendarDay className="mx-1" size={20} /> {new Date(nextEvent.date).toLocaleDateString("fr-FR", { year: 'numeric', month: 'long', day: 'numeric' })} à {new Date(nextEvent.date).toLocaleTimeString("fr-FR", { hour: '2-digit', minute: '2-digit' })}</p>
                         <p className="mb-1 flex"> <FaLocationDot className="mx-1" size={20} /> {nextEvent.adresse}</p>
                         <p className="mb-1 flex"> <FaMoneyBillWave className="mx-1" size={20} /> {nextEvent.price}€</p>
-                        <p className="mb-1 flex"> <FaUserGroup className="mx-1" size={20} /> {nextEvent.registered_limit}</p>
-                        <p className="mb-1 flex"> {nextEvent.team_style} </p>
+                        <p className="mb-1 flex"> <FaList className="mx-1" size={20} /> {nextEvent.registered_limit}</p>
+                        <p className="mb-1 flex"> <IoFastFood className="mx-1" size={20} /> {nextEvent.is_food_on_site ? "Restauration sur place" : "Restauration non disponible"}</p>
+                        <p className="mb-1 flex"> <FaUserGroup className="mx-1" size={20} /> {nextEvent.team_style}</p>
                         <div className="flex-grow"></div>
-                        <button className="bg-transparent border border-gray-600 font-bold mt-4 py-2 px-4 rounded-full hover:bg-gray-200">
-                            Voir plus
-                        </button>
                     </div>
                     :
                     <div>
