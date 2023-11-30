@@ -24,7 +24,7 @@ const HomeRightCard = () => {
             case 0:
                 return 'text-yellow-400';
             case 1:
-                return 'text-gray-300';
+                return 'text-blue-200';
             case 2:
                 return 'text-yellow-700';
             default:

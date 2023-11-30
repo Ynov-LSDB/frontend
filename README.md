@@ -53,6 +53,10 @@ npm start
 
 - Pour faire fonctionner ce site il faut installer : [backend LSDB](https://github.com/Ynov-LSDB/backend)
 
+## Compléments d'information
+
+- Si la clé API d'OpenWeatherMap ne fonctionne pas, veuillez en générer une nouvelle sur le site officiel : [OpenWeatherMap](https://openweathermap.org/api), et la remplacer dans le fichier .env à la racine du projet.
+
 ## Authors
 
 - [@QuentinSAIL](https://www.github.com/QuentinSAIL)

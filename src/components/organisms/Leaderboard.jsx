@@ -55,7 +55,7 @@ const Leaderboard = () => {
             case 1:
                 return <FaMedal className="text-yellow-400" size={25} />;
             case 2:
-                return <FaMedal className="text-gray-300" size={25} />;
+                return <FaMedal className="text-blue-200" size={25} />;
             case 3:
                 return <FaMedal className="text-yellow-700" size={25} />;
             default:
