@@ -23,10 +23,10 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
             password: password,
         };
 
-        axios(api("post", "login", data))
+        axios(api("post", "login", data, null, "multipart/form-data", "*/*"))
             .then((response) => {
-                console.log(response);
                 localStorage.setItem("token", response.data.data.token);
+                localStorage.setItem("userId", response.data.data.user.id);
                 setIsLoggedIn(true);
                 setError(null);
                 navigate('/');

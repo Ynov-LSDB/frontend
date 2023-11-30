@@ -77,7 +77,7 @@ const Register = () => {
         }
 
         console.log(data);
-        axios(api("post", "register", data))
+        axios(api("post", "register", data, null, "multipart/form-data", "*/*"))
             .then((response) => {
                 console.log(response.data);
                 toast("Votre compte a été créé ✅", {

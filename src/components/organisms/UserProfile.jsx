@@ -8,56 +8,61 @@ import api from "../../toolkit/api.config";
 
 const UserProfile = () => {
     const [userData, setUserData] = useState(null);
-    const [doubletteData, setDoubletteData] = useState(null);
+    const [eventData, setEventData] = useState(null);
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
         const token = localStorage.getItem('token');
-        console.log(userId);
 
-        axios(api("get", "me", null, token))
-            .then(response => {
-                console.log(response.data.data);
-                if (response.data.success) {
-                    setUserData(response.data.data);
+        const fetchUserProfile = async () => {
+            try {
+                const responseUser = await axios(api("get", "me", null, token));
+                if (responseUser.data.success) {
+                    setUserData(responseUser.data.data);
                 } else {
                     console.error('User not found');
                 }
-            })
-            .then(response => {
-                if (response && response.data.success) {
-                    setDoubletteData(response.data.data);
+
+                const responseEvent = await axios(api("get", "user/nextEvent", null, token));
+                if (responseEvent.data.success) {
+                    setEventData(responseEvent.data.data);
                 }
-            })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
-            });
+            } catch (error) {
+                console.error('Error fetching user or event data:', error);
+            }
+        };
+
+        fetchUserProfile();
     }, []);
-    
-    console.log("userData " + userData)
+
     if (!userData) {
         return (
-            <div className="flex justify-center items-center ">
+            <div className="flex justify-center items-center h-screen">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
             </div>
         );
     }
 
-
+    // Définition des props pour le composant ProfileLeftCard
     const userProps = {
-        imageURL: userData.imageURL || PhotoProfile,
+        imageURL: userData.imageURL_profile || PhotoProfile,
         firstName: userData.firstname,
         lastName: userData.lastname,
         birthDate: userData.birth_date,
     };
 
+    // Définition des props pour le composant ProfileRightCards
     const userInfosProps = {
         imageURL_favBoules: userData.imageURL_fav_balls || ImageFavBoules,
         nomFavBoules: userData.fav_balls_name || "Mes boules favorites",
-        imageURL_event: "",
         classement: userData.rank_id,
-        doublette: doubletteData ? `${doubletteData.firstname} ${doubletteData.lastname}` : 'Non renseigné',
-        boissonPreferee: userData.fav_drink_id || "Non renseigné",
+        doublette: userData.doublette ? `${userData.doublette.firstname} ${userData.doublette.lastname}` : 'Non renseigné',
+        boissonPreferee: userData.drink ? userData.drink.title : "Non renseigné",
+        boissonPrefereeId: userData.drink ? userData.drink.id : null,
+        nextEventTitle: eventData ? eventData.title : "Aucun évènement à venir",
+        nextEventDate: eventData ? eventData.date : null,
+        nextEventAddress: eventData ? eventData.adresse : null,
+        nextEventDescription: eventData ? eventData.description : null,
     };
 
     return (

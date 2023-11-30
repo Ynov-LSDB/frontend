@@ -1,4 +1,4 @@
-const api = (method, path, data = null, token = null) => {
+const api = (method, path, data = null, token = null, multipartFormData, s) => {
     const config = {
         baseUrl: "http://localhost/api/",
         path: path,
@@ -10,10 +10,10 @@ const api = (method, path, data = null, token = null) => {
     const headers = config.token
         ? {
             Authorization: `Bearer ${config.token}`,
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
         }
         : {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
         };
 
     return {

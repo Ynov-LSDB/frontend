@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../../toolkit/api.config";
 import { FaUserGroup, FaLocationDot, FaMoneyBillWave } from "react-icons/fa6";
 import { FaCalendarDay } from "react-icons/fa";
 
@@ -10,7 +11,7 @@ const HomeLeftCard = () => {
     useEffect(() => {
         setLoading(true);
         setTimeout(2000)
-        axios.get('http://localhost:80/api/event/last')
+        axios(api("get", "event/last"))
             .then(response => {
                 if (response.data.success) {
                     setEvent(response.data.data);
@@ -42,7 +43,6 @@ const HomeLeftCard = () => {
                         <p className="mb-1 flex"> {nextEvent.team_style} </p>
                         <div className="flex-grow"></div>
                         <button className="bg-transparent border border-gray-600 font-bold mt-4 py-2 px-4 rounded-full hover:bg-gray-200">
-                            {/* TODO : On click button, redirect to event page*/}
                             Voir plus
                         </button>
                     </div>
@@ -54,7 +54,5 @@ const HomeLeftCard = () => {
         </div>
     );
 };
-
-
 
 export default HomeLeftCard;
