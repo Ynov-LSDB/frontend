@@ -9,11 +9,10 @@ import Loader from "../../atoms/Loader";
 
 const Events = () => {
     const [pagination, setPagination] = useState({
-        pageIndex: 0, // page index matlab = page number
-        pageSize: 6, // page size matlab = limit
+        pageIndex: 0,
+        pageSize: 6,
     });
     const [loading, setLoading] = useState(false);
-
     const [events, setEvents] = useState({});
     const [userisIn, setUserisIn] = useState(true);
 
@@ -26,9 +25,7 @@ const Events = () => {
             null,
             token
         )).then((response) => {
-            let data = response.data.data;
-            console.log(data);
-            setEvents(data);
+            setEvents(response.data.data);
             setLoading(false);
         }).catch((error) => {
             console.log(error);
