@@ -11,13 +11,24 @@ import Register from "./components/organisms/Auth/Register";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.min.css';
 import Ranking from "./components/templates/Ranking/Ranking";
+import axios from "axios";
+import api from "./toolkit/api.config";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const token = localStorage.getItem('token')
   useEffect(() => {
     if (token) {
-      setIsLoggedIn(true);
+        axios(api("get", "me", null, token, "application/json", "*/*"))
+            .then((response) => {
+                setIsLoggedIn(true);
+            })
+            .catch((error) => {
+                console.error('Error fetching events data:', error.response);
+                setIsLoggedIn(false);
+                localStorage.removeItem('token');
+                localStorage.removeItem('userId');
+            });
     }
   }, []);
 
